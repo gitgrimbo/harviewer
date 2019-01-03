@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: core/dom.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: core/dom.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* See license.txt for terms of usage */
+
+/**
+ * @module core/dom
+ */
+define([
+    "./array",
+    "./css",
+    "./sniff",
+    "core/trace"
+],
+
+function(Arr, Css, Sniff, Trace) {
+
+//***********************************************************************************************//
+
+var Dom = {};
+
+//*************************************************************************************************
+// DOM
+
+Dom.getBody = function(doc)
+{
+    if (doc.body)
+        return doc.body;
+
+    var body = doc.getElementsByTagName("body")[0];
+    if (body)
+        return body;
+
+    // Should never happen.
+    return null;
+};
+
+Dom.getAncestorByClass = function(node, className)
+{
+    for (var parent = node; parent; parent = parent.parentNode)
+    {
+        if (Css.hasClass(parent, className))
+            return parent;
+    }
+
+    return null;
+};
+
+Dom.$ = function()
+{
+    return Dom.getElementByClass.apply(this, arguments);
+};
+
+Dom.getElementByClass = function(node, className)  // className, className, ...
+{
+    if (!node)
+        return null;
+
+    var args = Arr.cloneArray(arguments);
+    args.splice(0, 1);
+    for (var child = node.firstChild; child; child = child.nextSibling)
+    {
+        var args1 = Arr.cloneArray(args);
+        args1.unshift(child);
+        if (Css.hasClass.apply(this, args1)) {
+            return child;
+        }
+        var found = Dom.getElementByClass.apply(this, args1);
+        if (found)
+            return found;
+    }
+
+    return null;
+};
+
+Dom.getElementsByClass = function(node, className)  // className, className, ...
+{
+    function iteratorHelper(node, classNames, result)
+    {
+        for (var child = node.firstChild; child; child = child.nextSibling)
+        {
+            var args1 = Arr.cloneArray(classNames);
+            args1.unshift(child);
+            if (Css.hasClass.apply(null, args1))
+                result.push(child);
+
+            iteratorHelper(child, classNames, result);
+        }
+    }
+
+    var args = Arr.cloneArray(arguments);
+    args.shift();
+
+    if (node.querySelectorAll)
+    {
+        var selector = "." + args.join(".");
+        return node.querySelectorAll(selector);
+    }
+
+    var result = [];
+    iteratorHelper(node, args, result);
+    return result;
+};
+
+Dom.getChildByClass = function(node) // ,classname, classname, classname...
+{
+    for (var i = 1; i &lt; arguments.length; ++i)
+    {
+        var className = arguments[i];
+        var child = node.firstChild;
+        node = null;
+        for (; child; child = child.nextSibling)
+        {
+            if (Css.hasClass(child, className))
+            {
+                node = child;
+                break;
+            }
+        }
+    }
+
+    return node;
+};
+
+Dom.isAncestor = function(node, potentialAncestor)
+{
+    for (var parent = node; parent; parent = parent.parentNode)
+    {
+        if (parent === potentialAncestor)
+            return true;
+    }
+
+    return false;
+};
+
+Dom.eraseNode = function(node)
+{
+    while (node.lastChild)
+        node.removeChild(node.lastChild);
+};
+
+Dom.clearNode = function(node)
+{
+    node.innerHTML = "";
+};
+
+
+//***********************************************************************************************//
+// Layout
+
+Dom.getOverflowParent = function(element)
+{
+    for (var scrollParent = element.parentNode; scrollParent;
+        scrollParent = scrollParent.offsetParent)
+    {
+        if (scrollParent.scrollHeight > scrollParent.offsetHeight)
+            return scrollParent;
+    }
+};
+
+Dom.getElementBox = function(el)
+{
+    var result = {};
+
+    if (el.getBoundingClientRect)
+    {
+        var rect = el.getBoundingClientRect();
+
+        // fix IE problem with offset when not in fullscreen mode
+        var offset = Sniff.isIE ? document.body.clientTop || document.documentElement.clientTop: 0;
+        var scroll = Dom.getWindowScrollPosition();
+
+        result.top = Math.round(rect.top - offset + scroll.top);
+        result.left = Math.round(rect.left - offset + scroll.left);
+        result.height = Math.round(rect.bottom - rect.top);
+        result.width = Math.round(rect.right - rect.left);
+    }
+    else
+    {
+        var position = Dom.getElementPosition(el);
+
+        result.top = position.top;
+        result.left = position.left;
+        result.height = el.offsetHeight;
+        result.width = el.offsetWidth;
+    }
+
+    return result;
+};
+
+Dom.getElementPosition = function(el)
+{
+    var left = 0;
+    var top = 0;
+
+    do
+    {
+        left += el.offsetLeft;
+        top += el.offsetTop;
+    }
+    while (el === el.offsetParent);
+
+    return {left:left, top:top};
+};
+
+Dom.getWindowSize = function()
+{
+    var width = 0;
+    var height = 0;
+    var el;
+
+    if (typeof window.innerWidth === "number")
+    {
+        width = window.innerWidth;
+        height = window.innerHeight;
+    }
+    else if ((el=document.documentElement) &amp;&amp; (el.clientHeight || el.clientWidth))
+    {
+        width = el.clientWidth;
+        height = el.clientHeight;
+    }
+    else if ((el=document.body) &amp;&amp; (el.clientHeight || el.clientWidth))
+    {
+        width = el.clientWidth;
+        height = el.clientHeight;
+    }
+
+    return {width: width, height: height};
+};
+
+Dom.getWindowScrollSize = function()
+{
+    var width = 0;
+    var height = 0;
+    var el;
+
+    // first try the document.documentElement scroll size
+    if (!Sniff.isIEQuiksMode &amp;&amp; (el=document.documentElement) &amp;&amp;
+       (el.scrollHeight || el.scrollWidth))
+    {
+        width = el.scrollWidth;
+        height = el.scrollHeight;
+    }
+
+    // then we need to check if document.body has a bigger scroll size value
+    // because sometimes depending on the browser and the page, the document.body
+    // scroll size returns a smaller (and wrong) measure
+    if ((el=document.body) &amp;&amp; (el.scrollHeight || el.scrollWidth) &amp;&amp;
+        (el.scrollWidth > width || el.scrollHeight > height))
+    {
+        width = el.scrollWidth;
+        height = el.scrollHeight;
+    }
+
+    return {width: width, height: height};
+};
+
+Dom.getWindowScrollPosition = function()
+{
+    var top = 0;
+    var left = 0;
+    var el;
+
+    if(typeof window.pageYOffset === "number")
+    {
+        top = window.pageYOffset;
+        left = window.pageXOffset;
+    }
+    else if((el=document.body) &amp;&amp; (el.scrollTop || el.scrollLeft))
+    {
+        top = el.scrollTop;
+        left = el.scrollLeft;
+    }
+    else if((el=document.documentElement) &amp;&amp; (el.scrollTop || el.scrollLeft))
+    {
+        top = el.scrollTop;
+        left = el.scrollLeft;
+    }
+
+    return {top:top, left:left};
+};
+
+// ********************************************************************************************* //
+// Scrolling
+
+Dom.scrollIntoCenterView = function(element, scrollBox, notX, notY)
+{
+    if (!element)
+        return;
+
+    if (!scrollBox)
+        scrollBox = Dom.getOverflowParent(element);
+
+    if (!scrollBox)
+        return;
+
+    var offset = Dom.getClientOffset(element);
+
+    if (!notY)
+    {
+        var topSpace = offset.y - scrollBox.scrollTop;
+        var bottomSpace = (scrollBox.scrollTop + scrollBox.clientHeight)
+            - (offset.y + element.offsetHeight);
+
+        if (topSpace &lt; 0 || bottomSpace &lt; 0)
+        {
+            var centerY = offset.y - (scrollBox.clientHeight/2);
+            scrollBox.scrollTop = centerY;
+        }
+    }
+
+    if (!notX)
+    {
+        var leftSpace = offset.x - scrollBox.scrollLeft;
+        var rightSpace = (scrollBox.scrollLeft + scrollBox.clientWidth)
+            - (offset.x + element.clientWidth);
+
+        if (leftSpace &lt; 0 || rightSpace &lt; 0)
+        {
+            var centerX = offset.x - (scrollBox.clientWidth/2);
+            scrollBox.scrollLeft = centerX;
+        }
+    }
+};
+
+Dom.getClientOffset = function(elt)
+{
+    function addOffset(elt, coords, view)
+    {
+        var p = elt.offsetParent;
+
+        var style = view.getComputedStyle(elt, "");
+
+        if (elt.offsetLeft)
+            coords.x += elt.offsetLeft + parseInt(style.borderLeftWidth, 10);
+        if (elt.offsetTop)
+            coords.y += elt.offsetTop + parseInt(style.borderTopWidth, 10);
+
+        if (p)
+        {
+            if (p.nodeType === 1)
+                addOffset(p, coords, view);
+        }
+        else if (elt.ownerDocument.defaultView.frameElement)
+        {
+            addOffset(elt.ownerDocument.defaultView.frameElement,
+                coords, elt.ownerDocument.defaultView);
+        }
+    }
+
+    var coords = {x: 0, y: 0};
+    if (elt)
+    {
+        var view = elt.ownerDocument.defaultView;
+        addOffset(elt, coords, view);
+    }
+
+    return coords;
+};
+
+// ********************************************************************************************* //
+
+return Dom;
+
+// ********************************************************************************************* //
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-core_array.html">core/array</a></li><li><a href="module-core_cookies.html">core/cookies</a></li><li><a href="module-core_css.html">core/css</a></li><li><a href="module-core_date.html">core/date</a></li><li><a href="module-core_dom.html">core/dom</a></li><li><a href="module-core_dragdrop.html">core/dragdrop</a></li><li><a href="module-core_events.html">core/events</a></li><li><a href="module-core_json.html">core/json</a></li><li><a href="module-core_lib.html">core/lib</a></li><li><a href="module-core_mime.html">core/mime</a></li><li><a href="module-core_object.html">core/object</a></li><li><a href="module-core_rect.html">core/rect</a></li><li><a href="module-core_sniff.html">core/sniff</a></li><li><a href="module-core_StatsService.html">core/StatsService</a></li><li><a href="module-core_string.html">core/string</a></li><li><a href="module-core_trace.html">core/trace</a></li><li><a href="module-core_url.html">core/url</a></li><li><a href="module-domplate_domplate.html">domplate/domplate</a></li><li><a href="module-domplate_domTree.html">domplate/domTree</a></li><li><a href="module-domplate_infoTip.html">domplate/infoTip</a></li><li><a href="module-domplate_popupMenu.html">domplate/popupMenu</a></li><li><a href="module-domplate_tableView.html">domplate/tableView</a></li><li><a href="module-domplate_tabView.html">domplate/tabView</a></li><li><a href="module-domplate_toolbar.html">domplate/toolbar</a></li><li><a href="module-domplate_toolTip.html">domplate/toolTip</a></li><li><a href="module-harPreview.html">harPreview</a></li><li><a href="module-harViewer.html">harViewer</a></li><li><a href="module-preview_harModel.html">preview/harModel</a></li><li><a href="module-preview_harModelLoader.html">preview/harModelLoader</a></li><li><a href="module-tabs_aboutTab.html">tabs/aboutTab</a></li><li><a href="module-tabs_domTab.html">tabs/domTab</a></li><li><a href="module-tabs_harStats.html">tabs/harStats</a></li><li><a href="module-tabs_homeTab.html">tabs/homeTab</a></li><li><a href="module-tabs_pageTimeline.html">tabs/pageTimeline</a></li><li><a href="module-tabs_previewTab.html">tabs/previewTab</a></li><li><a href="module-tabs_schemaTab.html">tabs/schemaTab</a></li><li><a href="module-tabs_search.html">tabs/search</a></li></ul><h3>Classes</h3><ul><li><a href="module-core_dragdrop.Tracker.html">Tracker</a></li><li><a href="module-preview_harModel.html">preview/harModel</a></li><li><a href="module-tabs_aboutTab.html">tabs/aboutTab</a></li><li><a href="module-tabs_homeTab.html">tabs/homeTab</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Feb 16 2017 14:43:58 GMT+0000 (GMT Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

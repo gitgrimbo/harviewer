@@ -1,0 +1,5 @@
+/* See license.txt for terms of usage */
+
+
+define(["require","../domplate/domplate","../domplate/tabView","../core/lib","i18n!../nls/harViewer"],function(e,a,t,n,i){function o(){}var b=a.A,r=a.DIV,c=a.SPAN;return o.prototype={id:"About",label:i.aboutTabLabel,tabHeaderTag:b({class:"$tab.id\\Tab tab",view:"$tab.id",_repObject:"$tab"},"$tab.label",c("&nbsp;"),c({class:"version"},"$tab.tabView.version")),bodyTag:r({class:"aboutBody"}),onUpdateBody:function(a,t){var i=this;t=this.bodyTag.replace({},t),e(["text!./aboutTab.html"],function(e){function o(e,a,t){return t?e.replace(new RegExp(a,"g"),t):e}e=o(e,"@VERSION@",a.version),e=o(e,"@HAR_SPEC_URL@",a.harSpecURL),e=function(e){return o(e,"@HARVIEWER_DEMO_URL@",window.location.href.split("?")[0])}(e),t.innerHTML=e,$(".linkSchema").click(n.bind(i.onSchema,i))})},onSchema:function(){this.tabView.selectTabByName("Schema")}},o});
+//# sourceMappingURL=aboutTab.js.map

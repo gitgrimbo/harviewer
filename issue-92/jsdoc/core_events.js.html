@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: core/events.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: core/events.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* See license.txt for terms of usage */
+
+/**
+ * @module core/events
+ */
+define([
+    "core/trace"
+],
+
+function(Trace) {
+
+//***********************************************************************************************//
+
+/**
+ * @alias module:core/events
+ */
+var Events = {};
+
+//***********************************************************************************************//
+
+/**
+ * @param {Array} listeners
+ * @param {String} name
+ * @param {Array} args
+ */
+Events.dispatch = function(listeners, name, args)
+{
+    for (var i=0; listeners &amp;&amp; i&lt;listeners.length; i++)
+    {
+        var listener = listeners[i];
+        if (listener[name])
+        {
+            try
+            {
+                listener[name].apply(listener, args);
+            }
+            catch (exc)
+            {
+                Trace.exception(exc);
+            }
+        }
+    }
+};
+
+/**
+ * @param {Array} listeners
+ * @param {String} name
+ * @param {Array} args
+ */
+Events.dispatch2 = function(listeners, name, args)
+{
+    for (var i=0; i&lt;listeners.length; i++)
+    {
+        var listener = listeners[i];
+        if (listener[name])
+        {
+            try
+            {
+                var result = listener[name].apply(listener, args);
+                if (result)
+                    return result;
+            }
+            catch (exc)
+            {
+                Trace.exception(exc);
+            }
+        }
+    }
+};
+
+//***********************************************************************************************//
+// Events
+
+/**
+ *
+ */
+Events.fixEvent = function(e)
+{
+    return jQuery.event.fix(e || window.event);
+};
+
+/**
+ *
+ */
+Events.fireEvent = function(element, event)
+{
+    if (document.createEvent)
+    {
+        var evt = document.createEvent("Events");
+        evt.initEvent(event, true, false); // event type,bubbling,cancelable
+        return !element.dispatchEvent(evt);
+    }
+};
+
+/**
+ *
+ */
+Events.cancelEvent = function(event)
+{
+    var e = Events.fixEvent(event);
+    e.stopPropagation();
+    e.preventDefault();
+};
+
+/**
+ *
+ */
+Events.addEventListener = function(object, name, handler, direction)
+{
+    direction = direction || false;
+
+    if (object.addEventListener)
+        object.addEventListener(name, handler, direction);
+    else
+        object.attachEvent("on"+name, handler);
+};
+
+/**
+ *
+ */
+Events.removeEventListener = function(object, name, handler, direction)
+{
+    direction = direction || false;
+
+    if (object.removeEventListener)
+        object.removeEventListener(name, handler, direction);
+    else
+        object.detachEvent("on"+name, handler);
+};
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+// Key Events
+
+/**
+ *
+ */
+Events.isLeftClick = function(event)
+{
+    return event.button === 0 &amp;&amp; Events.noKeyModifiers(event);
+};
+
+/**
+ *
+ */
+Events.noKeyModifiers = function(event)
+{
+    return !event.ctrlKey &amp;&amp; !event.shiftKey &amp;&amp; !event.altKey &amp;&amp; !event.metaKey;
+};
+
+/**
+ *
+ */
+Events.isControlClick = function(event)
+{
+    return event.button === 0 &amp;&amp; Events.isControl(event);
+};
+
+/**
+ *
+ */
+Events.isShiftClick = function(event)
+{
+    return event.button === 0 &amp;&amp; Events.isShift(event);
+};
+
+/**
+ *
+ */
+Events.isControl = function(event)
+{
+    return (event.metaKey || event.ctrlKey) &amp;&amp; !event.shiftKey &amp;&amp; !event.altKey;
+};
+
+/**
+ *
+ */
+Events.isAlt = function(event)
+{
+    return event.altKey &amp;&amp; !event.ctrlKey &amp;&amp; !event.shiftKey &amp;&amp; !event.metaKey;
+};
+
+/**
+ *
+ */
+Events.isAltClick = function(event)
+{
+    return event.button === 0 &amp;&amp; Events.isAlt(event);
+};
+
+/**
+ *
+ */
+Events.isControlShift = function(event)
+{
+    return (event.metaKey || event.ctrlKey) &amp;&amp; event.shiftKey &amp;&amp; !event.altKey;
+};
+
+/**
+ *
+ */
+Events.isShift = function(event)
+{
+    return event.shiftKey &amp;&amp; !event.metaKey &amp;&amp; !event.ctrlKey &amp;&amp; !event.altKey;
+};
+
+// ********************************************************************************************* //
+
+return Events;
+
+// ********************************************************************************************* //
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-core_array.html">core/array</a></li><li><a href="module-core_cookies.html">core/cookies</a></li><li><a href="module-core_css.html">core/css</a></li><li><a href="module-core_date.html">core/date</a></li><li><a href="module-core_dom.html">core/dom</a></li><li><a href="module-core_dragdrop.html">core/dragdrop</a></li><li><a href="module-core_events.html">core/events</a></li><li><a href="module-core_json.html">core/json</a></li><li><a href="module-core_lib.html">core/lib</a></li><li><a href="module-core_mime.html">core/mime</a></li><li><a href="module-core_object.html">core/object</a></li><li><a href="module-core_rect.html">core/rect</a></li><li><a href="module-core_sniff.html">core/sniff</a></li><li><a href="module-core_StatsService.html">core/StatsService</a></li><li><a href="module-core_string.html">core/string</a></li><li><a href="module-core_trace.html">core/trace</a></li><li><a href="module-core_url.html">core/url</a></li><li><a href="module-domplate_domplate.html">domplate/domplate</a></li><li><a href="module-domplate_domTree.html">domplate/domTree</a></li><li><a href="module-domplate_infoTip.html">domplate/infoTip</a></li><li><a href="module-domplate_popupMenu.html">domplate/popupMenu</a></li><li><a href="module-domplate_tableView.html">domplate/tableView</a></li><li><a href="module-domplate_tabView.html">domplate/tabView</a></li><li><a href="module-domplate_toolbar.html">domplate/toolbar</a></li><li><a href="module-domplate_toolTip.html">domplate/toolTip</a></li><li><a href="module-harPreview.html">harPreview</a></li><li><a href="module-harViewer.html">harViewer</a></li><li><a href="module-preview_harModel.html">preview/harModel</a></li><li><a href="module-preview_harModelLoader.html">preview/harModelLoader</a></li><li><a href="module-tabs_aboutTab.html">tabs/aboutTab</a></li><li><a href="module-tabs_domTab.html">tabs/domTab</a></li><li><a href="module-tabs_harStats.html">tabs/harStats</a></li><li><a href="module-tabs_homeTab.html">tabs/homeTab</a></li><li><a href="module-tabs_pageTimeline.html">tabs/pageTimeline</a></li><li><a href="module-tabs_previewTab.html">tabs/previewTab</a></li><li><a href="module-tabs_schemaTab.html">tabs/schemaTab</a></li><li><a href="module-tabs_search.html">tabs/search</a></li></ul><h3>Classes</h3><ul><li><a href="module-core_dragdrop.Tracker.html">Tracker</a></li><li><a href="module-preview_harModel.html">preview/harModel</a></li><li><a href="module-tabs_aboutTab.html">tabs/aboutTab</a></li><li><a href="module-tabs_homeTab.html">tabs/homeTab</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Feb 16 2017 14:43:58 GMT+0000 (GMT Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

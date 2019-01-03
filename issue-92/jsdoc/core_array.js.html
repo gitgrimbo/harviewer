@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: core/array.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: core/array.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* See license.txt for terms of usage */
+
+/**
+ * @module core/array
+ */
+define([
+    "core/trace"
+],
+
+function(Trace) {
+
+//***********************************************************************************************//
+
+/**
+ * Helper functions for arrays.
+ * @alias module:core/array
+ */
+var Arr = {};
+
+//*************************************************************************************************
+// Arrays
+
+/**
+ * @param {Object} object
+ */
+Arr.isArray = function(object)
+{
+    // Supported by IE9
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray
+    return Array.isArray(object);
+};
+
+/**
+ * @param {Array} array
+ * @param {Function} fn
+ */
+Arr.cloneArray = function(array, fn)
+{
+   var newArray = [];
+
+   if (fn)
+       for (var i = 0; i &lt; array.length; ++i)
+           newArray.push(fn(array[i]));
+   else
+       for (var j = 0; j &lt; array.length; ++j)
+           newArray.push(array[j]);
+
+   return newArray;
+};
+
+/**
+ * @param {Array} array
+ * @param {Number} index
+ * @param {Array} other
+ */
+Arr.arrayInsert = function(array, index, other)
+{
+   for (var i = 0; i &lt; other.length; ++i)
+       array.splice(i+index, 0, other[i]);
+   return array;
+};
+
+/**
+ * @param {Array} list
+ * @param {Object} item
+ */
+Arr.remove = function(list, item)
+{
+    for (var i = 0; i &lt; list.length; ++i)
+    {
+        if (list[i] === item)
+        {
+            list.splice(i, 1);
+            return true;
+        }
+    }
+    return false;
+};
+
+// ********************************************************************************************* //
+
+return Arr;
+
+// ********************************************************************************************* //
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-core_array.html">core/array</a></li><li><a href="module-core_cookies.html">core/cookies</a></li><li><a href="module-core_css.html">core/css</a></li><li><a href="module-core_date.html">core/date</a></li><li><a href="module-core_dom.html">core/dom</a></li><li><a href="module-core_dragdrop.html">core/dragdrop</a></li><li><a href="module-core_events.html">core/events</a></li><li><a href="module-core_json.html">core/json</a></li><li><a href="module-core_lib.html">core/lib</a></li><li><a href="module-core_mime.html">core/mime</a></li><li><a href="module-core_object.html">core/object</a></li><li><a href="module-core_rect.html">core/rect</a></li><li><a href="module-core_sniff.html">core/sniff</a></li><li><a href="module-core_StatsService.html">core/StatsService</a></li><li><a href="module-core_string.html">core/string</a></li><li><a href="module-core_trace.html">core/trace</a></li><li><a href="module-core_url.html">core/url</a></li><li><a href="module-domplate_domplate.html">domplate/domplate</a></li><li><a href="module-domplate_domTree.html">domplate/domTree</a></li><li><a href="module-domplate_infoTip.html">domplate/infoTip</a></li><li><a href="module-domplate_popupMenu.html">domplate/popupMenu</a></li><li><a href="module-domplate_tableView.html">domplate/tableView</a></li><li><a href="module-domplate_tabView.html">domplate/tabView</a></li><li><a href="module-domplate_toolbar.html">domplate/toolbar</a></li><li><a href="module-domplate_toolTip.html">domplate/toolTip</a></li><li><a href="module-harPreview.html">harPreview</a></li><li><a href="module-harViewer.html">harViewer</a></li><li><a href="module-preview_harModel.html">preview/harModel</a></li><li><a href="module-preview_harModelLoader.html">preview/harModelLoader</a></li><li><a href="module-tabs_aboutTab.html">tabs/aboutTab</a></li><li><a href="module-tabs_domTab.html">tabs/domTab</a></li><li><a href="module-tabs_harStats.html">tabs/harStats</a></li><li><a href="module-tabs_homeTab.html">tabs/homeTab</a></li><li><a href="module-tabs_pageTimeline.html">tabs/pageTimeline</a></li><li><a href="module-tabs_previewTab.html">tabs/previewTab</a></li><li><a href="module-tabs_schemaTab.html">tabs/schemaTab</a></li><li><a href="module-tabs_search.html">tabs/search</a></li></ul><h3>Classes</h3><ul><li><a href="module-core_dragdrop.Tracker.html">Tracker</a></li><li><a href="module-preview_harModel.html">preview/harModel</a></li><li><a href="module-tabs_aboutTab.html">tabs/aboutTab</a></li><li><a href="module-tabs_homeTab.html">tabs/homeTab</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Feb 16 2017 14:43:58 GMT+0000 (GMT Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

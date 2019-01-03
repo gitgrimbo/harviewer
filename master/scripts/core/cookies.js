@@ -1,0 +1,5 @@
+/* See license.txt for terms of usage */
+
+
+define(["./string"],function(e){function o(){var e=window.location.pathname;if(!window.location.pathname.match(/\/$/)){var o=e.split("/");o.length-=1,e=o.join("/")+"/"}return e}return{getCookie:function(o){for(var t=document.cookie.split(";"),i=0;i<t.length;i++){var n=t[i].split("=");if(e.trim(n[0])===o)return n[1].length?unescape(e.trim(n[1])):null}},setCookie:function(e,t,i,n,a,r){var s=new Date;s.setTime(s.getTime()),i&&(i=1e3*i*60*60*24),n="string"==typeof n?n:o();var c=new Date(s.getTime()+i);document.cookie=e+"="+escape(t)+(i?";expires="+c.toGMTString():"")+(n?";path="+n:"")+(a?";domain="+a:"")+(r?";secure":"")},removeCookie:function(e,t,i){this.getCookie(e)&&(t="string"==typeof t?t:o(),document.cookie=e+"="+(t?";path="+t:"")+(i?";domain="+i:"")+";expires=Thu, 01-Jan-1970 00:00:01 GMT")},toggleCookie:function(e){var o=this.getBooleanCookie(e);this.setCookie(e,!o)},getBooleanCookie:function(e){var o=this.getCookie(e);return!(!o||"false"===o)},setBooleanCookie:function(e,o){this.setCookie(e,o?"true":"false")}}});
+//# sourceMappingURL=cookies.js.map

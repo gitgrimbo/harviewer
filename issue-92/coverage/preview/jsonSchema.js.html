@@ -1,0 +1,743 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for preview\jsonSchema.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">preview/</a> jsonSchema.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">6.36% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>7/110</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/157</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">12.5% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/8</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">6.36% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>7/110</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">define("preview/jsonSchema", [], function() {
+&nbsp;
+//*************************************************************************************************
+&nbsp;
+/**
+ * JSONSchema Validator - Validates JavaScript objects using JSON Schemas
+ *	(http://www.json.com/json-schema-proposal/)
+ *
+ * Copyright (c) 2007 Kris Zyp SitePen (www.sitepen.com)
+ * Licensed under the MIT (MIT-LICENSE.txt) license.
+To use the validator call JSONSchema.validate with an instance object and an optional schema object.
+If a schema is provided, it will be used to validate. If the instance object refers to a schema (self-validating),
+that schema will be used to validate and the schema parameter is not necessary (if both exist,
+both validations will occur).
+The validate method will return an array of validation errors. If there are no errors, then an
+empty list will be returned. A validation error will have two properties:
+"property" which indicates which property had the error
+"message" which indicates what the error was
+ */
+&nbsp;
+var JSONSchema = {
+	validate : <span class="fstat-no" title="function not covered" >function(/*Any*/instance,/*Object*/schema) {</span>
+		// Summary:
+		//  	To use the validator call JSONSchema.validate with an instance object and an optional schema object.
+		// 		If a schema is provided, it will be used to validate. If the instance object refers to a schema (self-validating),
+		// 		that schema will be used to validate and the schema parameter is not necessary (if both exist,
+		// 		both validations will occur).
+		// 		The validate method will return an object with two properties:
+		// 			valid: A boolean indicating if the instance is valid by the schema
+		// 			errors: An array of validation errors. If there are no errors, then an
+		// 					empty list will be returned. A validation error will have two properties:
+		// 						property: which indicates which property had the error
+		// 						message: which indicates what the error was
+		//
+<span class="cstat-no" title="statement not covered" >		return this._validate(instance,schema,false);</span>
+	},
+	checkPropertyChange : <span class="fstat-no" title="function not covered" >function(/*Any*/value,/*Object*/schema, /*String*/ property) {</span>
+		// Summary:
+		// 		The checkPropertyChange method will check to see if an value can legally be in property with the given schema
+		// 		This is slightly different than the validate method in that it will fail if the schema is readonly and it will
+		// 		not check for self-validation, it is assumed that the passed in value is already internally valid.
+		// 		The checkPropertyChange method will return the same object type as validate, see JSONSchema.validate for
+		// 		information.
+		//
+<span class="cstat-no" title="statement not covered" >		return this._validate(value,schema, property || "property");</span>
+	},
+	_validate : <span class="fstat-no" title="function not covered" >function(/*Any*/instance,/*Object*/schema,/*Boolean*/ _changing) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	var errors = [];</span>
+		// validate a value against a property definition
+<span class="fstat-no" title="function not covered" >	function checkProp(value, schema, path,i){</span>
+<span class="cstat-no" title="statement not covered" >		var l;</span>
+<span class="cstat-no" title="statement not covered" >		path += path ? typeof i == 'number' ? '[' + i + ']' : typeof i == 'undefined' ? '' : '.' + i : i;</span>
+<span class="fstat-no" title="function not covered" >		function addError(message){</span>
+<span class="cstat-no" title="statement not covered" >			errors.push({property:path,message:message});</span>
+		}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >		if((typeof schema != 'object' || schema instanceof Array) &amp;&amp; (path || typeof schema != 'function')){</span>
+<span class="cstat-no" title="statement not covered" >			if(typeof schema == 'function'){</span>
+<span class="cstat-no" title="statement not covered" >				if(!(value instanceof schema)){</span>
+<span class="cstat-no" title="statement not covered" >					addError("is not an instance of the class/constructor " + schema.name);</span>
+				}
+			}else <span class="cstat-no" title="statement not covered" >if(schema){</span>
+<span class="cstat-no" title="statement not covered" >				addError("Invalid schema/property definition " + schema);</span>
+			}
+<span class="cstat-no" title="statement not covered" >			return null;</span>
+		}
+<span class="cstat-no" title="statement not covered" >		if(_changing &amp;&amp; schema.readonly){</span>
+<span class="cstat-no" title="statement not covered" >			addError("is a readonly field, it can not be changed");</span>
+		}
+<span class="cstat-no" title="statement not covered" >		if(schema['extends']){ // if it extends another schema, it must pass that schema as well</span>
+<span class="cstat-no" title="statement not covered" >			checkProp(value,schema['extends'],path,i);</span>
+		}
+		// validate a value against a type definition
+<span class="fstat-no" title="function not covered" >		function checkType(type,value){</span>
+<span class="cstat-no" title="statement not covered" >			if(type){</span>
+<span class="cstat-no" title="statement not covered" >				if(typeof type == 'string' &amp;&amp; type != 'any' &amp;&amp;</span>
+						(type == 'null' ? value !== null : typeof value != type) &amp;&amp;
+						!(value instanceof Array &amp;&amp; type == 'array') &amp;&amp;
+						!(type == 'integer' &amp;&amp; value%1===0)){
+<span class="cstat-no" title="statement not covered" >					return [{property:path,message:(typeof value) + " value found, but a " + type + " is required"}];</span>
+				}
+<span class="cstat-no" title="statement not covered" >				if(type instanceof Array){</span>
+<span class="cstat-no" title="statement not covered" >					var unionErrors=[];</span>
+<span class="cstat-no" title="statement not covered" >					for(var j = 0; j &lt; type.length; j++){ // a union type</span>
+<span class="cstat-no" title="statement not covered" >						if(!(unionErrors=checkType(type[j],value)).length){</span>
+<span class="cstat-no" title="statement not covered" >							break;</span>
+						}
+					}
+<span class="cstat-no" title="statement not covered" >					if(unionErrors.length){</span>
+<span class="cstat-no" title="statement not covered" >						return unionErrors;</span>
+					}
+				}else <span class="cstat-no" title="statement not covered" >if(typeof type == 'object'){</span>
+<span class="cstat-no" title="statement not covered" >					var priorErrors = errors;</span>
+<span class="cstat-no" title="statement not covered" >					errors = [];</span>
+<span class="cstat-no" title="statement not covered" >					checkProp(value,type,path);</span>
+<span class="cstat-no" title="statement not covered" >					var theseErrors = errors;</span>
+<span class="cstat-no" title="statement not covered" >					errors = priorErrors;</span>
+<span class="cstat-no" title="statement not covered" >					return theseErrors;</span>
+				}
+			}
+<span class="cstat-no" title="statement not covered" >			return [];</span>
+		}
+<span class="cstat-no" title="statement not covered" >		if(value === undefined){</span>
+<span class="cstat-no" title="statement not covered" >			if(!schema.optional){</span>
+<span class="cstat-no" title="statement not covered" >				addError("is missing and it is not optional");</span>
+			}
+		}else{
+<span class="cstat-no" title="statement not covered" >			errors = errors.concat(checkType(schema.type,value));</span>
+<span class="cstat-no" title="statement not covered" >			if(schema.disallow &amp;&amp; !checkType(schema.disallow,value).length){</span>
+<span class="cstat-no" title="statement not covered" >				addError(" disallowed value was matched");</span>
+			}
+<span class="cstat-no" title="statement not covered" >			if(value !== null){</span>
+<span class="cstat-no" title="statement not covered" >				if(value instanceof Array){</span>
+<span class="cstat-no" title="statement not covered" >					if(schema.items){</span>
+<span class="cstat-no" title="statement not covered" >						if(schema.items instanceof Array){</span>
+<span class="cstat-no" title="statement not covered" >							for(i=0,l=value.length; i&lt;l; i++){</span>
+<span class="cstat-no" title="statement not covered" >								errors.concat(checkProp(value[i],schema.items[i],path,i));</span>
+							}
+						}else{
+<span class="cstat-no" title="statement not covered" >							for(i=0,l=value.length; i&lt;l; i++){</span>
+<span class="cstat-no" title="statement not covered" >								errors.concat(checkProp(value[i],schema.items,path,i));</span>
+							}
+						}
+					}
+<span class="cstat-no" title="statement not covered" >					if(schema.minItems &amp;&amp; value.length &lt; schema.minItems){</span>
+<span class="cstat-no" title="statement not covered" >						addError("There must be a minimum of " + schema.minItems + " in the array");</span>
+					}
+<span class="cstat-no" title="statement not covered" >					if(schema.maxItems &amp;&amp; value.length &gt; schema.maxItems){</span>
+<span class="cstat-no" title="statement not covered" >						addError("There must be a maximum of " + schema.maxItems + " in the array");</span>
+					}
+				}else <span class="cstat-no" title="statement not covered" >if(schema.properties){</span>
+<span class="cstat-no" title="statement not covered" >					errors.concat(checkObj(value,schema.properties,path,schema.additionalProperties));</span>
+				}
+<span class="cstat-no" title="statement not covered" >				if(schema.pattern &amp;&amp; typeof value == 'string' &amp;&amp; !value.match(schema.pattern)){</span>
+<span class="cstat-no" title="statement not covered" >					addError("does not match the regex pattern " + schema.pattern);</span>
+				}
+<span class="cstat-no" title="statement not covered" >				if(schema.maxLength &amp;&amp; typeof value == 'string' &amp;&amp; value.length &gt; schema.maxLength){</span>
+<span class="cstat-no" title="statement not covered" >					addError("may only be " + schema.maxLength + " characters long");</span>
+				}
+<span class="cstat-no" title="statement not covered" >				if(schema.minLength &amp;&amp; typeof value == 'string' &amp;&amp; value.length &lt; schema.minLength){</span>
+<span class="cstat-no" title="statement not covered" >					addError("must be at least " + schema.minLength + " characters long");</span>
+				}
+<span class="cstat-no" title="statement not covered" >				if(typeof schema.minimum !== undefined &amp;&amp; typeof value == typeof schema.minimum &amp;&amp;</span>
+						schema.minimum &gt; value){
+<span class="cstat-no" title="statement not covered" >					addError("must have a minimum value of " + schema.minimum);</span>
+				}
+<span class="cstat-no" title="statement not covered" >				if(typeof schema.maximum !== undefined &amp;&amp; typeof value == typeof schema.maximum &amp;&amp;</span>
+						schema.maximum &lt; value){
+<span class="cstat-no" title="statement not covered" >					addError("must have a maximum value of " + schema.maximum);</span>
+				}
+<span class="cstat-no" title="statement not covered" >				if(schema['enum']){</span>
+<span class="cstat-no" title="statement not covered" >					var enumer = schema['enum'];</span>
+<span class="cstat-no" title="statement not covered" >					l = enumer.length;</span>
+<span class="cstat-no" title="statement not covered" >					var found;</span>
+<span class="cstat-no" title="statement not covered" >					for(var j = 0; j &lt; l; j++){</span>
+<span class="cstat-no" title="statement not covered" >						if(enumer[j]===value){</span>
+<span class="cstat-no" title="statement not covered" >							found=1;</span>
+<span class="cstat-no" title="statement not covered" >							break;</span>
+						}
+					}
+<span class="cstat-no" title="statement not covered" >					if(!found){</span>
+<span class="cstat-no" title="statement not covered" >						addError("does not have a value in the enumeration " + enumer.join(", "));</span>
+					}
+				}
+<span class="cstat-no" title="statement not covered" >				if(typeof schema.maxDecimal == 'number' &amp;&amp;</span>
+					(value.toString().match(new RegExp("\\.[0-9]{" + (schema.maxDecimal + 1) + ",}")))){
+<span class="cstat-no" title="statement not covered" >					addError("may only have " + schema.maxDecimal + " digits of decimal places");</span>
+				}
+			}
+		}
+<span class="cstat-no" title="statement not covered" >		return null;</span>
+	}
+	// validate an object against a schema
+<span class="fstat-no" title="function not covered" >	function checkObj(instance,objTypeDef,path,additionalProp){</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >		if(typeof objTypeDef =='object'){</span>
+<span class="cstat-no" title="statement not covered" >			if(typeof instance != 'object' || instance instanceof Array){</span>
+<span class="cstat-no" title="statement not covered" >				errors.push({property:path,message:"an object is required"});</span>
+			}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >			for(var i in objTypeDef){</span>
+<span class="cstat-no" title="statement not covered" >				if(objTypeDef.hasOwnProperty(i) &amp;&amp; !(i.charAt(0) == '_' &amp;&amp; i.charAt(1) == '_')){</span>
+<span class="cstat-no" title="statement not covered" >					var value = instance[i];</span>
+<span class="cstat-no" title="statement not covered" >					var propDef = objTypeDef[i];</span>
+<span class="cstat-no" title="statement not covered" >					checkProp(value,propDef,path,i);</span>
+				}
+			}
+		}
+<span class="cstat-no" title="statement not covered" >		for(i in instance){</span>
+<span class="cstat-no" title="statement not covered" >			if(instance.hasOwnProperty(i) &amp;&amp; !(i.charAt(0) == '_' &amp;&amp; i.charAt(1) == '_') &amp;&amp; objTypeDef &amp;&amp; !objTypeDef[i] &amp;&amp; additionalProp===false){</span>
+<span class="cstat-no" title="statement not covered" >				errors.push({property:path,message:(typeof value) + "The property " + i +</span>
+						" is not defined in the schema and the schema does not allow additional properties"});
+			}
+<span class="cstat-no" title="statement not covered" >			var requires = objTypeDef &amp;&amp; objTypeDef[i] &amp;&amp; objTypeDef[i].requires;</span>
+<span class="cstat-no" title="statement not covered" >			if(requires &amp;&amp; !(requires in instance)){</span>
+<span class="cstat-no" title="statement not covered" >				errors.push({property:path,message:"the presence of the property " + i + " requires that " + requires + " also be present"});</span>
+			}
+<span class="cstat-no" title="statement not covered" >			value = instance[i];</span>
+<span class="cstat-no" title="statement not covered" >			if(objTypeDef &amp;&amp; typeof objTypeDef == 'object' &amp;&amp; !(i in objTypeDef)){</span>
+<span class="cstat-no" title="statement not covered" >				checkProp(value,additionalProp,path,i);</span>
+			}
+<span class="cstat-no" title="statement not covered" >			if(!_changing &amp;&amp; value &amp;&amp; value.$schema){</span>
+<span class="cstat-no" title="statement not covered" >				errors = errors.concat(checkProp(value,value.$schema,path,i));</span>
+			}
+		}
+<span class="cstat-no" title="statement not covered" >		return errors;</span>
+	}
+<span class="cstat-no" title="statement not covered" >	if(schema){</span>
+<span class="cstat-no" title="statement not covered" >		checkProp(instance,schema,'',_changing || '');</span>
+	}
+<span class="cstat-no" title="statement not covered" >	if(!_changing &amp;&amp; instance &amp;&amp; instance.$schema){</span>
+<span class="cstat-no" title="statement not covered" >		checkProp(instance,instance.$schema,'','');</span>
+	}
+<span class="cstat-no" title="statement not covered" >	return {valid:!errors.length,errors:errors};</span>
+	}
+	/* will add this later
+	newFromSchema : function() {
+	}
+*/
+};
+&nbsp;
+return JSONSchema;
+&nbsp;
+//*************************************************************************************************
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Feb 16 2017 14:44:00 GMT+0000 (GMT Standard Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+{"version":3,"sources":["?"],"names":["define","root","domTabLabel","searchDisabledForIE","searchOptionJsonQuery","tableView","searchResultsDefaultText","searchPlaceholder","jsonQueryPlaceholder","queryResultsTableView"],"mappings":";;;AAEAA,QAEIC,MACIC,YAAe,MACfC,oBAAuB,4DACvBC,sBAAyB,aACzBC,UAAa,aACbC,yBAA4B,qBAC5BC,kBAAqB,SACrBC,qBAAwB,aACxBC,sBAAyB","file":"domTab.js"}

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: tabs/domTab.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: tabs/domTab.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* See license.txt for terms of usage */
+
+/**
+ * @module tabs/domTab
+ */
+define("tabs/domTab", [
+    "domplate/domplate",
+    "domplate/tabView",
+    "core/lib",
+    "i18n!nls/domTab",
+    "domplate/toolbar",
+    "tabs/search",
+    "core/dragdrop",
+    "domplate/domTree",
+    "core/cookies",
+    "domplate/tableView",
+    "core/trace",
+    "json-query/JSONQuery"
+],
+
+function(Domplate, TabView, Lib, Strings, Toolbar, Search, DragDrop, DomTree, Cookies,
+    TableView, Trace) {
+
+/* global JSONQuery*/
+
+var domplate = Domplate.domplate;
+var DIV = Domplate.DIV;
+var INPUT = Domplate.INPUT;
+var SPAN = Domplate.SPAN;
+var TABLE = Domplate.TABLE;
+var TBODY = Domplate.TBODY;
+var TD = Domplate.TD;
+var TR = Domplate.TR;
+
+// ********************************************************************************************* //
+// Home Tab
+
+// Search options
+var jsonQueryOption = "searchJsonQuery";
+
+function DomTab()
+{
+    this.toolbar = new Toolbar();
+    this.toolbar.addButtons(this.getToolbarButtons());
+
+    // Display jsonQuery results as a tree by default.
+    this.tableView = false;
+}
+
+DomTab.prototype = domplate(TabView.Tab.prototype,
+{
+    id: "DOM",
+    label: Strings.domTabLabel,
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+    // Domplates
+
+    separator:
+        DIV({"class": "separator"}),
+
+    tabBodyTag:
+        DIV({"class": "tab$tab.id\\Body tabBody", _repObject: "$tab"},
+            DIV({"class": "domToolbar"}),
+            DIV({"class": "domContent"})
+        ),
+
+    domBox:
+        TABLE({"class": "domBox", cellpadding: 0, cellspacing: 0},
+            TBODY(
+                TR(
+                    TD({"class": "content"},
+                        DIV({"class": "title"}, "$title")
+                    ),
+                    TD({"class": "splitter"}),
+                    TD({"class": "results"},
+                        DIV({"class": "resultsDefaultContent"},
+                            Strings.searchResultsDefaultText
+                        )
+                    )
+                )
+            )
+        ),
+
+    queryResultsViewType:
+        DIV({"class": "queryResultsViewType"},
+            INPUT({"class": "type", type: "checkbox", onclick: "$onTableView"}),
+                SPAN({"class": "label"},
+                Strings.queryResultsTableView
+            )
+        ),
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+    // Tab
+
+    onUpdateBody: function(tabView, body)
+    {
+        this.toolbar.render(Lib.$(body, "domToolbar"));
+
+        // Lib.selectElementText doesn't support IE8 and below.
+        if (!Lib.supportsSelectElementText)
+        {
+            var searchBox = Lib.getElementByClass(body, "searchBox");
+
+            var searchInput = Lib.getElementByClass(searchBox, "searchInput");
+            searchInput.setAttribute("disabled", "true");
+            searchInput.setAttribute("title", Strings.searchDisabledForIE);
+
+            var searchOptions = Lib.getElementByClass(searchBox, "arrow");
+            searchOptions.setAttribute("disabled", "true");
+        }
+
+        this.updateSearchResultsUI();
+
+        // TODO: Re-render the entire tab content here
+    },
+
+    getToolbarButtons: function()
+    {
+        var buttons = [];
+
+        /*buttons.push({
+            id: "tableView",
+            tag: this.tableBtn
+        });*/
+
+        buttons.push({
+            id: "search",
+            tag: Search.Box.tag,
+            initialize: Search.Box.initialize
+        });
+
+        return buttons;
+    },
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+    // Search
+
+    createSearchObject: function(text)
+    {
+        // There can be more HAR files/logs displayed.
+        var tables = Lib.getElementsByClass(this._body, "domTable");
+        tables = Lib.cloneArray(tables);
+
+        // Get all inputs (ie. HAR log files).
+        var inputs = tables.map(function(a) {
+            return a.repObject.input;
+        });
+
+        // Instantiate search object for this panel.
+        return new Search.ObjectSearch(text, inputs, false, false);
+    },
+
+    getSearchOptions: function()
+    {
+        var options = [];
+
+        // JSON Query
+        options.push({
+            label: Strings.searchOptionJsonQuery,
+            checked: Cookies.getBooleanCookie(jsonQueryOption),
+            command: Lib.bindFixed(this.onOption, this, jsonQueryOption)
+        });
+
+        return options;
+    },
+
+    onOption: function(name)
+    {
+        Search.Box.onOption(name);
+
+        this.updateSearchResultsUI();
+    },
+
+    updateSearchResultsUI: function()
+    {
+        var value = Cookies.getBooleanCookie(jsonQueryOption);
+
+        // There can be more HAR files/logs displayed.
+        var boxes = Lib.getElementsByClass(this._body, "domBox");
+        for (var i = 0; i &lt; boxes.length; i++)
+        {
+            var box = boxes[i];
+            var results = Lib.getElementByClass(box, "results");
+            var splitter = Lib.getElementByClass(box, "splitter");
+
+            if (value)
+            {
+                Lib.setClass(results, "visible");
+                Lib.setClass(splitter, "visible");
+            }
+            else
+            {
+                Lib.removeClass(results, "visible");
+                Lib.removeClass(splitter, "visible");
+            }
+
+        }
+
+        var searchInput = Lib.getElementByClass(this._body, "searchInput");
+        if (searchInput)
+        {
+            var placeholder = value ? Strings.jsonQueryPlaceholder : Strings.searchPlaceholder;
+            searchInput.setAttribute("placeholder", placeholder);
+        }
+    },
+
+    onSearch: function(text, keyCode)
+    {
+        var jsonQuery = Cookies.getBooleanCookie(jsonQueryOption);
+        if (jsonQuery)
+            return this.evalJsonQuery(text, keyCode);
+
+        // Avoid searches for short texts.
+        if (text.length &lt; 3)
+            return true;
+
+        // Clear previous search if the text has changed.
+        if (this.currSearch &amp;&amp; this.currSearch.text !== text)
+            this.currSearch = null;
+
+        // Create new search object if necessary. This objects holds current search
+        // position and other meta data.
+        if (!this.currSearch)
+            this.currSearch = this.createSearchObject(text);
+
+        // Search (or continue to search) through the JSON structure. The method returns
+        // true if a match is found.
+        if (this.currSearch.findNext(text))
+        {
+            // The root of search data is the list of inputs, the second is the
+            // current input (where match has been found).
+            var currentInput = this.currSearch.stack[1].object;
+            var tree = this.getDomTree(currentInput);
+
+            // Let's expand the tree so, the found value is displayed to the user.
+            // Iterate over all current parents.
+            for (var i=0; i&lt;this.currSearch.stack.length; i++)
+                tree.expandRow(this.currSearch.stack[i].object);
+
+            // A match corresponds to a node-value in the HAR log.
+            var match = this.currSearch.getCurrentMatch();
+            var row = tree.getRow(match.value);
+            if (row)
+            {
+                var valueText = row.querySelector(".memberValueCell .objectBox");
+                this.currSearch.selectText(valueText.firstChild);
+                Lib.scrollIntoCenterView(valueText);
+            }
+
+            return true;
+        }
+
+        // Nothing has been found or we have reached the end. Reset the search object so,
+        // the search starts from the begginging again.
+        if (this.currSearch.matches.length > 0)
+            this.currSearch = this.createSearchObject(text);
+
+        return false;
+    },
+
+    evalJsonQuery: function(expr, keyCode)
+    {
+        // JSON Path is executed when enter key is pressed.
+        if (keyCode !== 13)
+            return true;
+
+        // Eval the expression for all logs.
+        var boxes = Lib.getElementsByClass(this._body, "domBox");
+        for (var i=0; i&lt;boxes.length; i++)
+        {
+            var box = boxes[i];
+            var table = Lib.getElementByClass(box, "domTable");
+            var input = table.repObject.input;
+
+            var parentNode = box.querySelector(".domBox .results");
+            Lib.clearNode(parentNode);
+
+            try
+            {
+                var viewType = this.queryResultsViewType.append({}, parentNode);
+                if (this.tableView)
+                {
+                    var type = Lib.getElementByClass(viewType, "type");
+                    type.setAttribute("checked", "true");
+                }
+
+                var result = JSONQuery(expr, input);
+                parentNode.repObject = result;
+
+                if (this.tableView)
+                {
+                    TableView.render(parentNode, result);
+                }
+                else
+                {
+                    var domTree = new DomTree(result);
+                    domTree.append(parentNode);
+                }
+            }
+            catch (err)
+            {
+                Trace.exception(err);
+            }
+        }
+
+        return true;
+    },
+
+    onTableView: function(event)
+    {
+        var e = Lib.fixEvent(event);
+        var target = e.target;
+
+        var tab = Lib.getAncestorByClass(target, "tabBody");
+        var tableView = $(target).prop("checked");
+        tab.repObject.tableView = tableView;
+
+        var resultBox = Lib.getAncestorByClass(target, "results");
+        var result = resultBox.repObject;
+
+        // Clean up
+        var tree = Lib.getElementByClass(resultBox, "domTable");
+        if (tree)
+            tree.parentNode.removeChild(tree);
+
+        var table = Lib.getElementByClass(resultBox, "dataTableSizer");
+        if (table)
+            table.parentNode.removeChild(table);
+
+        if (tableView)
+        {
+            TableView.render(resultBox, result);
+        }
+        else
+        {
+            var domTree = new DomTree(result);
+            domTree.append(resultBox);
+        }
+    },
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+    // Public
+
+    append: function(input)
+    {
+        var content = Lib.$(this._body, "domContent");
+
+        // Iterate all pages and get titles.
+        var titles = [];
+        for (var i=0; i&lt;input.log.pages.length; i++)
+        {
+            var page = input.log.pages[i];
+            titles.push(page.title);
+        }
+
+        // Create box for DOM tree + render list of titles for this log.
+        var box = this.domBox.append({title: titles.join(", ")}, content);
+        var domContent = Lib.getElementByClass(box, "content");
+
+        // Initialize splitter for JSON path query results area.
+        var element = Lib.getElementByClass(box, "splitter");
+        this.splitter = new DragDrop.Tracker(element, {
+            onDragStart: Lib.bind(this.onDragStart, this),
+            onDragOver: Lib.bind(this.onDragOver, this),
+            onDrop: Lib.bind(this.onDrop, this)
+        });
+
+        this.updateSearchResultsUI();
+
+        // Render log structure as an expandable tree.
+        var domTree = new DomTree(input);
+        domTree.append(domContent);
+
+        // Separate the next HAR log (e.g. dropped as a local file).
+        this.separator.append({}, content);
+    },
+
+    getDomTree: function(input)
+    {
+        // Iterate all existing dom-trees. There can be more if more logs
+        // is currently displayed.
+        var tables = Lib.getElementsByClass(this._body, "domTable");
+        for (var i=0; i&lt;tables.length; i++)
+        {
+            var tree = tables[i].repObject;
+            if (tree.input === input)
+                return tree;
+        }
+        return null;
+    },
+
+    highlightFile: function(input, file)
+    {
+        // Iterate all input HAR logs.
+        var tree = this.getDomTree(input);
+        if (!tree)
+            return;
+
+        // Expand the root and 'entries' node.
+        tree.expandRow(input.log);
+        tree.expandRow(input.log.entries);
+
+        // Now expand the file node and highlight it.
+        var row = tree.expandRow(file);
+        if (row)
+            Lib.setClassTimed(row, "jumpHighlight");
+
+        // Scroll the tree so, the highlighted entry is visible.
+        //xxxHonza: a little hacky
+        var content = Lib.$(this._body, "domContent");
+        content.scrollTop = row.offsetTop;
+    },
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+    // Splitter
+
+    onDragStart: function(tracker)
+    {
+        var body = Lib.getBody(this._body.ownerDocument);
+        body.setAttribute("vResizing", "true");
+
+        var box = Lib.getAncestorByClass(tracker.element, "domBox");
+        var element = Lib.getElementByClass(box, "content");
+        this.startWidth = element.clientWidth;
+    },
+
+    onDragOver: function(newPos, tracker)
+    {
+        var box = Lib.getAncestorByClass(tracker.element, "domBox");
+        var content = Lib.getElementByClass(box, "content");
+        var newWidth = (this.startWidth + newPos.x);
+        content.style.width = newWidth + "px";
+    },
+
+    onDrop: function(tracker)
+    {
+        var body = Lib.getBody(this._body.ownerDocument);
+        body.removeAttribute("vResizing");
+    }
+});
+
+// ********************************************************************************************* //
+
+return DomTab;
+
+// ********************************************************************************************* //
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-core_array.html">core/array</a></li><li><a href="module-core_cookies.html">core/cookies</a></li><li><a href="module-core_css.html">core/css</a></li><li><a href="module-core_date.html">core/date</a></li><li><a href="module-core_dom.html">core/dom</a></li><li><a href="module-core_dragdrop.html">core/dragdrop</a></li><li><a href="module-core_events.html">core/events</a></li><li><a href="module-core_json.html">core/json</a></li><li><a href="module-core_lib.html">core/lib</a></li><li><a href="module-core_mime.html">core/mime</a></li><li><a href="module-core_object.html">core/object</a></li><li><a href="module-core_rect.html">core/rect</a></li><li><a href="module-core_sniff.html">core/sniff</a></li><li><a href="module-core_StatsService.html">core/StatsService</a></li><li><a href="module-core_string.html">core/string</a></li><li><a href="module-core_trace.html">core/trace</a></li><li><a href="module-core_url.html">core/url</a></li><li><a href="module-domplate_domplate.html">domplate/domplate</a></li><li><a href="module-domplate_domTree.html">domplate/domTree</a></li><li><a href="module-domplate_infoTip.html">domplate/infoTip</a></li><li><a href="module-domplate_popupMenu.html">domplate/popupMenu</a></li><li><a href="module-domplate_tableView.html">domplate/tableView</a></li><li><a href="module-domplate_tabView.html">domplate/tabView</a></li><li><a href="module-domplate_toolbar.html">domplate/toolbar</a></li><li><a href="module-domplate_toolTip.html">domplate/toolTip</a></li><li><a href="module-harPreview.html">harPreview</a></li><li><a href="module-harViewer.html">harViewer</a></li><li><a href="module-preview_harModel.html">preview/harModel</a></li><li><a href="module-preview_harModelLoader.html">preview/harModelLoader</a></li><li><a href="module-tabs_aboutTab.html">tabs/aboutTab</a></li><li><a href="module-tabs_domTab.html">tabs/domTab</a></li><li><a href="module-tabs_harStats.html">tabs/harStats</a></li><li><a href="module-tabs_homeTab.html">tabs/homeTab</a></li><li><a href="module-tabs_pageTimeline.html">tabs/pageTimeline</a></li><li><a href="module-tabs_previewTab.html">tabs/previewTab</a></li><li><a href="module-tabs_schemaTab.html">tabs/schemaTab</a></li><li><a href="module-tabs_search.html">tabs/search</a></li></ul><h3>Classes</h3><ul><li><a href="module-core_dragdrop.Tracker.html">Tracker</a></li><li><a href="module-preview_harModel.html">preview/harModel</a></li><li><a href="module-tabs_aboutTab.html">tabs/aboutTab</a></li><li><a href="module-tabs_homeTab.html">tabs/homeTab</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Feb 16 2017 14:43:58 GMT+0000 (GMT Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

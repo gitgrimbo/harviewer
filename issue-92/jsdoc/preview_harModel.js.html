@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: preview/harModel.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: preview/harModel.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* See license.txt for terms of usage */
+/* See license.txt for terms of usage */
+
+/**
+ * @module preview/harModel
+ */
+define([
+    "core/lib",
+    "preview/jsonSchema",
+    "preview/ref",
+    "preview/harSchema",
+    "core/cookies",
+    "core/trace",
+    "i18n!nls/harModel"
+],
+
+function(Lib, JSONSchema, Ref, HarSchema, Cookies, Trace, Strings) {
+
+//*************************************************************************************************
+// Statistics
+
+/**
+ * @constructor
+ * @alias module:preview/harModel
+ */
+function HarModel()
+{
+    this.input = null;
+}
+
+HarModel.prototype =
+/** @lends module:preview/harModel.prototype */
+{
+    append: function(input)
+    {
+        if (!input)
+        {
+            Trace.error("HarModel.append; Trying to append null input!");
+            return;
+        }
+
+        // Sort all requests according to the start time.
+        input.log.entries.sort(function(a, b)
+        {
+            var timeA = Lib.parseISO8601(a.startedDateTime);
+            var timeB = Lib.parseISO8601(b.startedDateTime);
+
+            if (timeA &lt; timeB)
+                return -1;
+            else if (timeA > timeB)
+                return 1;
+
+            return 0;
+        });
+
+        if (this.input)
+        {
+            if (input.log.pages)
+            {
+                for (var i=0; i&lt;input.log.pages.length; i++)
+                    this.importPage(input.log.pages[i], input.log.entries);
+            }
+            else
+            {
+                Trace.error("Import of additional data without a page is not yet supported.");
+                //xxxHonza: how to properly import data with no page?
+                //for (var i=0; i&lt;input.log.entries.length; i++)
+                //    this.input.log.entries.push(input.log.entries[i]);
+                return null;
+            }
+        }
+        else
+        {
+            this.input = Lib.cloneJSON(input);
+        }
+
+        return this.input;
+    },
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+    // Pages
+
+    /**
+     * @return {Array} An array of page objects.
+     */
+    getPages: function()
+    {
+        if (!this.input)
+            return [];
+
+        return this.input.log.pages ? this.input.log.pages : [];
+    },
+
+    /**
+     * @return {Page} The first page if it exists, else null.
+     */
+    getFirstPage: function()
+    {
+        var pages = this.getPages();
+        return pages.length > 0 ? pages[0] : null;
+    },
+
+    /**
+     * @see {@link module:preview/harModel.getPageEntries}
+     */
+    getPageEntries: function(page)
+    {
+        return HarModel.getPageEntries(this.input, page);
+    },
+
+    getAllEntries: function(page)
+    {
+        return this.input ? this.input.log.entries : [];
+    },
+
+    getParentPage: function(file)
+    {
+        return HarModel.getParentPage(this.input, file);
+    },
+
+    importPage: function(page, entries)
+    {
+        var pageId = this.getUniquePageID(page.id);
+        var prevPageId = page.id;
+        page.id = pageId;
+
+        this.input.log.pages.push(page);
+        for (var i=0; i&lt;entries.length; i++)
+        {
+            var entry = entries[i];
+            if (entry.pageref === prevPageId)
+            {
+                entry.pageref = pageId;
+                this.input.log.entries.push(entry);
+            }
+        }
+    },
+
+    getUniquePageID: function(defaultId)
+    {
+        var pages = this.input.log.pages;
+        var hashTable = {};
+        for (var i=0; i&lt;pages.length; i++)
+            hashTable[pages[i].id] = true;
+
+        if (!hashTable[defaultId])
+            return defaultId;
+
+        var counter = 1;
+        while (true)
+        {
+            var pageId = defaultId + counter;
+            if (!hashTable[pageId])
+                return pageId;
+            counter++;
+        }
+    },
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+    // JSON
+
+    toJSON : function(input)
+    {
+        if (!input)
+            input = this.input;
+
+        if (!input)
+            return "";
+
+        // xxxHonza: we don't have to iterate all entries again if it did already.
+        var entries = this.input.log.entries;
+        for (var i=0; i&lt;entries.length; i++) {
+            var entry = entries[i];
+            if (entry.response.content.text)
+                entry.response.content.toJSON = contentToUnicode;
+        }
+
+        var jsonString = JSON.stringify(this.input, null, "\t");
+        var result = jsonString.replace(/\\\\u/g, "\\u");
+        return result;
+    }
+};
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+// Static methods (no instance of the model, no |this| )
+
+HarModel.parse = function(jsonString, validate)
+{
+    var input = jsonString;
+
+    try
+    {
+        if (typeof(jsonString) === "string")
+            input = jQuery.parseJSON(jsonString);
+    }
+    catch (err)
+    {
+        Trace.exception("HarModel.parse; EXCEPTION", err);
+
+        throw {
+            errors: [{
+                "message": "Failed to parse JSON",
+                "property": "JSON evaluation"
+            }]
+        };
+    }
+
+    if (!validate)
+        return input;
+
+    //xxxHonza: the schema doesn't have to be resolved repeatedly.
+    var resolvedSchema = Ref.resolveJson(HarSchema);
+    var result = JSONSchema.validate(input, resolvedSchema.logType);
+    if (result.valid)
+    {
+        this.validateRequestTimings(input);
+        return input;
+    }
+
+    throw result;
+};
+
+// xxxHonza: optimalization using a map?
+/**
+ * If `page` is not provided, then return all the HAR entries without a parent `Page`.
+ * If `page` is provided, then return all the HAR entries whose `pageref` matches `page.id`.
+ * @param {HAR} input The input HAR object.
+ * @param {Page} page The `Page` object to use to search for entries.
+ * @return {Array} The `Page` entries.
+ */
+HarModel.getPageEntries = function(input, page)
+{
+    var result = [];
+
+    var entries = input.log.entries;
+    if (!entries)
+        return result;
+
+    for (var i=0; i&lt;entries.length; i++)
+    {
+        var entry = entries[i];
+
+        // Return all requests that doesn't have a parent page.
+        if (!entry.pageref &amp;&amp; !page)
+            result.push(entry);
+
+        // Return all requests for the specified page.
+        if (page &amp;&amp; entry.pageref === page.id)
+            result.push(entry);
+    }
+
+    return result;
+};
+
+// xxxHonza: optimize using a map?
+/**
+ * @param {HAR} input The input HAR object.
+ * @param {Entry} file The `Entry` object to use to find the parent `Page`.
+ * @return {Page} The parent `Page` of the file/`Entry`, or null if a parent `Page` could not be
+ *     found.
+ */
+HarModel.getParentPage = function(input, file)
+{
+    var pages = input.log.pages;
+    if (!pages)
+        return null;
+
+    for (var i=0; i&lt;pages.length; i++)
+    {
+        if (pages[i].id === file.pageref)
+            return pages[i];
+    }
+
+    return null;
+};
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+// Validation
+
+HarModel.validateRequestTimings = function(input)
+{
+    var errors = [];
+
+    // Iterate all request timings and check the total time.
+    var entries = input.log.entries;
+    for (var i=0; i&lt;entries.length; i++)
+    {
+        var entry = entries[i];
+        var timings = entry.timings;
+
+        /* http://code.google.com/p/chromium/issues/detail?id=339551
+        var total = 0;
+        for (var p in timings)
+        {
+            var time = parseInt(timings[p], 10);
+
+            // According to the spec, the ssl time is alrady included in "connect".
+            if (p != "ssl" &amp;&amp; time > 0)
+                total += time;
+        }
+
+        if (total != entry.time)
+        {
+            var message = Lib.formatString(Strings.validationSumTimeError,
+                entry.request.url, entry.time, total, i, entry.pageref);
+
+            errors.push({
+                input: input,
+                file: entry,
+                "message": message,
+                "property": Strings.validationType
+            });
+        }*/
+
+        if (timings.blocked &lt; -1 ||
+            timings.connect &lt; -1 ||
+            timings.dns &lt; -1 ||
+            timings.receive &lt; -1 ||
+            timings.send &lt; -1 ||
+            timings.wait &lt; -1)
+        {
+            var message = Lib.formatString(Strings.validationNegativeTimeError,
+                entry.request.url, i, entry.pageref);
+
+            errors.push({
+                input: input,
+                file: entry,
+                "message": message,
+                "property": Strings.validationType
+            });
+        }
+    }
+
+    if (errors.length)
+        throw {errors: errors, input: input};
+};
+
+HarModel.isCachedEntry = function(entry) {
+    var response = entry.response;
+    var resBodySize = Math.max(0, response.bodySize);
+    return (response.status === 304 || (resBodySize === 0 &amp;&amp; response.content &amp;&amp; response.content.size > 0));
+};
+
+HarModel.getEntrySize = function(entry) {
+    var bodySize = entry.response.bodySize;
+    return (bodySize &amp;&amp; bodySize !== -1) ? bodySize : entry.response.content.size;
+};
+
+HarModel.getEntryUncompressedSize = function(entry) {
+    return Math.max(0, entry.response.content.size) || Math.max(0, entry.response.bodySize);
+};
+
+HarModel.getEntryTransferredSize = function(entry) {
+    return (entry.response.status === 304) ? 0 : Math.max(0, entry.response.bodySize);
+};
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+// Make sure the response (it can be binary) is converted to Unicode.
+function contentToUnicode()
+{
+    var newContent = {};
+    for (var prop in this) {
+        if (prop !== "toJSON")
+            newContent[prop] = this[prop];
+    }
+
+    if (!this.text)
+        return newContent;
+
+    newContent.text = Array.prototype.map.call(this.text, function(x) {
+        var charCode = x.charCodeAt(0);
+        if ((charCode >= 0x20 &amp;&amp; charCode &lt; 0x7F) ||
+             charCode === 0xA || charCode === 0xD)
+            return x.charAt(0);
+
+        var unicode = charCode.toString(16).toUpperCase();
+        while (unicode.length &lt; 4)
+            unicode = "0" + unicode;
+        return "\\u" + unicode;
+    }).join("");
+
+    return newContent;
+}
+
+return HarModel;
+
+//*************************************************************************************************
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-core_array.html">core/array</a></li><li><a href="module-core_cookies.html">core/cookies</a></li><li><a href="module-core_css.html">core/css</a></li><li><a href="module-core_date.html">core/date</a></li><li><a href="module-core_dom.html">core/dom</a></li><li><a href="module-core_dragdrop.html">core/dragdrop</a></li><li><a href="module-core_events.html">core/events</a></li><li><a href="module-core_json.html">core/json</a></li><li><a href="module-core_lib.html">core/lib</a></li><li><a href="module-core_mime.html">core/mime</a></li><li><a href="module-core_object.html">core/object</a></li><li><a href="module-core_rect.html">core/rect</a></li><li><a href="module-core_sniff.html">core/sniff</a></li><li><a href="module-core_StatsService.html">core/StatsService</a></li><li><a href="module-core_string.html">core/string</a></li><li><a href="module-core_trace.html">core/trace</a></li><li><a href="module-core_url.html">core/url</a></li><li><a href="module-domplate_domplate.html">domplate/domplate</a></li><li><a href="module-domplate_domTree.html">domplate/domTree</a></li><li><a href="module-domplate_infoTip.html">domplate/infoTip</a></li><li><a href="module-domplate_popupMenu.html">domplate/popupMenu</a></li><li><a href="module-domplate_tableView.html">domplate/tableView</a></li><li><a href="module-domplate_tabView.html">domplate/tabView</a></li><li><a href="module-domplate_toolbar.html">domplate/toolbar</a></li><li><a href="module-domplate_toolTip.html">domplate/toolTip</a></li><li><a href="module-harPreview.html">harPreview</a></li><li><a href="module-harViewer.html">harViewer</a></li><li><a href="module-preview_harModel.html">preview/harModel</a></li><li><a href="module-preview_harModelLoader.html">preview/harModelLoader</a></li><li><a href="module-tabs_aboutTab.html">tabs/aboutTab</a></li><li><a href="module-tabs_domTab.html">tabs/domTab</a></li><li><a href="module-tabs_harStats.html">tabs/harStats</a></li><li><a href="module-tabs_homeTab.html">tabs/homeTab</a></li><li><a href="module-tabs_pageTimeline.html">tabs/pageTimeline</a></li><li><a href="module-tabs_previewTab.html">tabs/previewTab</a></li><li><a href="module-tabs_schemaTab.html">tabs/schemaTab</a></li><li><a href="module-tabs_search.html">tabs/search</a></li></ul><h3>Classes</h3><ul><li><a href="module-core_dragdrop.Tracker.html">Tracker</a></li><li><a href="module-preview_harModel.html">preview/harModel</a></li><li><a href="module-tabs_aboutTab.html">tabs/aboutTab</a></li><li><a href="module-tabs_homeTab.html">tabs/homeTab</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Feb 16 2017 14:43:58 GMT+0000 (GMT Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

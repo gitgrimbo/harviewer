@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for preview\ref.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">preview/</a> ref.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">4.65% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>4/86</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/127</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">16.67% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">4.65% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>4/86</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* This file comes from DOJO (adapted for requirejs): dojox/json/ref.js */
+&nbsp;
+define("preview/ref", [
+    "core/lib"
+],
+&nbsp;
+function(Lib) {
+&nbsp;
+//*************************************************************************************************
+&nbsp;
+// summary:
+// Adds advanced JSON {de}serialization capabilities to the base json library.
+// This enhances the capabilities of dojo.toJson and dojo.fromJson,
+// adding referencing support, date handling, and other extra format handling.
+// On parsing, references are resolved. When references are made to
+// ids/objects that have been loaded yet, the loader function will be set to
+// _loadObject to denote a lazy loading (not loaded yet) object.
+&nbsp;
+var ref =
+{
+	resolveJson: <span class="fstat-no" title="function not covered" >function(/*Object*/ root,/*Object?*/ args){</span>
+		// summary:
+		// 		Indexes and resolves references in the JSON object.
+		// description:
+		// 		A JSON Schema object that can be used to advise the handling of the JSON (defining ids, date properties, urls, etc)
+		//
+		// root:
+		//		The root object of the object graph to be processed
+		// args:
+		//		Object with additional arguments:
+		//
+		// The *index* parameter.
+		//		This is the index object (map) to use to store an index of all the objects.
+		// 		If you are using inter-message referencing, you must provide the same object for each call.
+		// The *defaultId* parameter.
+		//		This is the default id to use for the root object (if it doesn't define it's own id)
+		//	The *idPrefix* parameter.
+		//		This the prefix to use for the ids as they enter the index. This allows multiple tables
+		// 		to use ids (that might otherwise collide) that enter the same global index.
+		// 		idPrefix should be in the form "/Service/".  For example,
+		//		if the idPrefix is "/Table/", and object is encountered {id:"4",...}, this would go in the
+		//		index as "/Table/4".
+		//	The *idAttribute* parameter.
+		//		This indicates what property is the identity property. This defaults to "id"
+		//	The *assignAbsoluteIds* parameter.
+		//		This indicates that the resolveJson should assign absolute ids (__id) as the objects are being parsed.
+		//
+		// The *schemas* parameter
+		//		This provides a map of schemas, from which prototypes can be retrieved
+		// The *loader* parameter
+		//		This is a function that is called added to the reference objects that can't be resolved (lazy objects)
+		// return:
+		//		An object, the result of the processing
+<span class="cstat-no" title="statement not covered" >		args = args || {};</span>
+<span class="cstat-no" title="statement not covered" >		var idAttribute = args.idAttribute || 'id';</span>
+<span class="cstat-no" title="statement not covered" >		var prefix = args.idPrefix || '';</span>
+<span class="cstat-no" title="statement not covered" >		var assignAbsoluteIds = args.assignAbsoluteIds;</span>
+<span class="cstat-no" title="statement not covered" >		var index = args.index || {}; </span>// create an index if one doesn't exist
+<span class="cstat-no" title="statement not covered" >		var timeStamps = args.timeStamps;</span>
+<span class="cstat-no" title="statement not covered" >		var ref,reWalk=[];</span>
+<span class="cstat-no" title="statement not covered" >		var pathResolveRegex = /^(.*\/)?(\w+:\/\/)|[^\/\.]+\/\.\.\/|^.*\/(\/)/;</span>
+<span class="cstat-no" title="statement not covered" >		var addProp = this._addProp;</span>
+<span class="cstat-no" title="statement not covered" >		var F = <span class="fstat-no" title="function not covered" >function(){</span>};</span>
+<span class="fstat-no" title="function not covered" >		function walk(it, stop, defaultId, schema, defaultObject){</span>
+			// this walks the new graph, resolving references and making other changes
+<span class="cstat-no" title="statement not covered" >		 	var update, val, id = idAttribute in it ? it[idAttribute] : defaultId;</span>
+<span class="cstat-no" title="statement not covered" >		 	if(id !== undefined){</span>
+<span class="cstat-no" title="statement not covered" >		 		id = (prefix + id).replace(pathResolveRegex,'$2$3');</span>
+		 	}
+<span class="cstat-no" title="statement not covered" >		 	var target = defaultObject || it;</span>
+<span class="cstat-no" title="statement not covered" >			if(id !== undefined){ // if there is an id available...</span>
+<span class="cstat-no" title="statement not covered" >				if(assignAbsoluteIds){</span>
+<span class="cstat-no" title="statement not covered" >					it.__id = id;</span>
+				}
+<span class="cstat-no" title="statement not covered" >				if(args.schemas &amp;&amp; (!(it instanceof Array)) &amp;&amp; // won't try on arrays to do prototypes, plus it messes with queries</span>
+		 					(val = id.match(/^(.+\/)[^\.\[]*$/))){ // if it has a direct table id (no paths)
+<span class="cstat-no" title="statement not covered" >		 			schema = args.schemas[val[1]];</span>
+				}
+				// if the id already exists in the system, we should use the existing object, and just
+				// update it... as long as the object is compatible
+<span class="cstat-no" title="statement not covered" >				if(index[id] &amp;&amp; ((it instanceof Array) == (index[id] instanceof Array))){</span>
+<span class="cstat-no" title="statement not covered" >					target = index[id];</span>
+<span class="cstat-no" title="statement not covered" >					delete target.$ref; </span>// remove this artifact
+<span class="cstat-no" title="statement not covered" >					update = true;</span>
+				}else{
+<span class="cstat-no" title="statement not covered" >				 	var proto = schema &amp;&amp; schema.prototype; </span>// and if has a prototype
+<span class="cstat-no" title="statement not covered" >					if(proto){</span>
+						// if the schema defines a prototype, that needs to be the prototype of the object
+<span class="cstat-no" title="statement not covered" >						F.prototype = proto;</span>
+<span class="cstat-no" title="statement not covered" >						target = new F();</span>
+					}
+				}
+<span class="cstat-no" title="statement not covered" >				index[id] = target; </span>// add the prefix, set _id, and index it
+<span class="cstat-no" title="statement not covered" >				if(timeStamps){</span>
+<span class="cstat-no" title="statement not covered" >					timeStamps[id] = args.time;</span>
+				}
+			}
+<span class="cstat-no" title="statement not covered" >			var properties = schema &amp;&amp; schema.properties;</span>
+<span class="cstat-no" title="statement not covered" >			var length = it.length;</span>
+<span class="cstat-no" title="statement not covered" >			for(var i in it){</span>
+<span class="cstat-no" title="statement not covered" >				if(i==length){</span>
+<span class="cstat-no" title="statement not covered" >					break;</span>
+				}
+<span class="cstat-no" title="statement not covered" >				if(it.hasOwnProperty(i)){</span>
+<span class="cstat-no" title="statement not covered" >					val=it[i];</span>
+<span class="cstat-no" title="statement not covered" >					var propertyDefinition = properties &amp;&amp; properties[i];</span>
+<span class="cstat-no" title="statement not covered" >					if(propertyDefinition &amp;&amp; propertyDefinition.format == 'date-time' &amp;&amp; typeof val == 'string'){</span>
+<span class="cstat-no" title="statement not covered" >						val = Lib.fromISOString(val);</span>
+					}else <span class="cstat-no" title="statement not covered" >if((typeof val =='object') &amp;&amp; val &amp;&amp; !(val instanceof Date)){</span>
+<span class="cstat-no" title="statement not covered" >						ref=val.$ref;</span>
+<span class="cstat-no" title="statement not covered" >						if(ref){ // a reference was found</span>
+							// make sure it is a safe reference
+<span class="cstat-no" title="statement not covered" >							delete it[i];/</span>/ remove the property so it doesn't resolve to itself in the case of id.propertyName lazy values
+<span class="cstat-no" title="statement not covered" >							var path = ref.replace(/(#)([^\.\[])/,'$1.$2').match(/(^([^\[]*\/)?[^#\.\[]*)#?([\.\[].*)?/); </span>// divide along the path
+<span class="cstat-no" title="statement not covered" >							if((ref = (path[1]=='$' || path[1]=='this' || path[1]=='') ? root : index[(prefix + path[1]).replace(pathResolveRegex,'$2$3')])){  // a $ indicates to start with the root, otherwise start with an id</span>
+								// if there is a path, we will iterate through the path references
+<span class="cstat-no" title="statement not covered" >								if(path[3]){</span>
+<span class="cstat-no" title="statement not covered" >									path[3].replace(/(\[([^\]]+)\])|(\.?([^\.\[]+))/g,<span class="fstat-no" title="function not covered" >function(t,a,b,c,d){</span></span>
+<span class="cstat-no" title="statement not covered" >										ref = ref &amp;&amp; ref[b ? b.replace(/[\"\'\\]/,'') : d];</span>
+									});
+								}
+							}
+<span class="cstat-no" title="statement not covered" >							if(ref){</span>
+								// otherwise, no starting point was found (id not found), if stop is set, it does not exist, we have
+								// unloaded reference, if stop is not set, it may be in a part of the graph not walked yet,
+								// we will wait for the second loop
+<span class="cstat-no" title="statement not covered" >								val = ref;</span>
+							}else{
+<span class="cstat-no" title="statement not covered" >								if(!stop){</span>
+<span class="cstat-no" title="statement not covered" >									var rewalking;</span>
+<span class="cstat-no" title="statement not covered" >									if(!rewalking){</span>
+<span class="cstat-no" title="statement not covered" >										reWalk.push(target); </span>// we need to rewalk it to resolve references
+									}
+<span class="cstat-no" title="statement not covered" >									rewalking = true; </span>// we only want to add it once
+								}else{
+<span class="cstat-no" title="statement not covered" >									val = walk(val, false, val.$ref, propertyDefinition);</span>
+									// create a lazy loaded object
+<span class="cstat-no" title="statement not covered" >									val._loadObject = args.loader;</span>
+								}
+							}
+						}else{
+<span class="cstat-no" title="statement not covered" >							if(!stop){ // if we are in stop, that means we are in the second loop, and we only need to check this current one,</span>
+								// further walking may lead down circular loops
+<span class="cstat-no" title="statement not covered" >								val = walk(</span>
+									val,
+									reWalk==it,
+									id &amp;&amp; addProp(id, i), // the default id to use
+									propertyDefinition,
+									// if we have an existing object child, we want to
+									// maintain it's identity, so we pass it as the default object
+									target != it &amp;&amp; typeof target[i] == 'object' &amp;&amp; target[i]
+								);
+							}
+						}
+					}
+<span class="cstat-no" title="statement not covered" >					it[i] = val;</span>
+<span class="cstat-no" title="statement not covered" >					if(target!=it &amp;&amp; !target.__isDirty){// do updates if we are updating an existing object and it's not dirty</span>
+<span class="cstat-no" title="statement not covered" >						var old = target[i];</span>
+<span class="cstat-no" title="statement not covered" >						target[i] = val; </span>// only update if it changed
+<span class="cstat-no" title="statement not covered" >						if(update &amp;&amp; val !== old &amp;&amp; // see if it is different</span>
+								!target._loadObject &amp;&amp; // no updates if we are just lazy loading
+								!(val instanceof Date &amp;&amp; old instanceof Date &amp;&amp; val.getTime() == old.getTime()) &amp;&amp; // make sure it isn't an identical date
+								!(typeof val == 'function' &amp;&amp; typeof old == 'function' &amp;&amp; val.toString() == old.toString()) &amp;&amp; // make sure it isn't an indentical function
+								index.onUpdate){
+<span class="cstat-no" title="statement not covered" >							index.onUpdate(target,i,old,val); </span>// call the listener for each update
+						}
+					}
+				}
+			}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >			if(update){</span>
+				// this means we are updating, we need to remove deleted
+<span class="cstat-no" title="statement not covered" >				for(i in target){</span>
+<span class="cstat-no" title="statement not covered" >					if(!target.__isDirty &amp;&amp; target.hasOwnProperty(i) &amp;&amp; !it.hasOwnProperty(i) &amp;&amp; i != '__id' &amp;&amp; i != '__clientId' &amp;&amp; !(target instanceof Array &amp;&amp; isNaN(i))){</span>
+<span class="cstat-no" title="statement not covered" >						if(index.onUpdate &amp;&amp; i != "_loadObject" &amp;&amp; i != "_idAttr"){</span>
+<span class="cstat-no" title="statement not covered" >							index.onUpdate(target,i,target[i],undefined); </span>// call the listener for each update
+						}
+<span class="cstat-no" title="statement not covered" >						delete target[i];</span>
+<span class="cstat-no" title="statement not covered" >						while(target instanceof Array &amp;&amp; target.length &amp;&amp; target[target.length-1] === undefined){</span>
+							// shorten the target if necessary
+<span class="cstat-no" title="statement not covered" >							target.length--;</span>
+						}
+					}
+				}
+			}else{
+<span class="cstat-no" title="statement not covered" >				if(index.onLoad){</span>
+<span class="cstat-no" title="statement not covered" >					index.onLoad(target);</span>
+				}
+			}
+<span class="cstat-no" title="statement not covered" >			return target;</span>
+		}
+<span class="cstat-no" title="statement not covered" >		if(root &amp;&amp; typeof root == 'object'){</span>
+<span class="cstat-no" title="statement not covered" >			root = walk(root,false,args.defaultId); </span>// do the main walk through
+<span class="cstat-no" title="statement not covered" >			walk(reWalk,false); </span>// re walk any parts that were not able to resolve references on the first round
+		}
+<span class="cstat-no" title="statement not covered" >		return root;</span>
+	},
+&nbsp;
+	_addProp: <span class="fstat-no" title="function not covered" >function(id, prop){</span>
+<span class="cstat-no" title="statement not covered" >		return id + (id.match(/#/) ? id.length == 1 ? '' : '.' : '#') + prop;</span>
+	}
+};
+&nbsp;
+return ref;
+&nbsp;
+//*************************************************************************************************
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Feb 16 2017 14:44:00 GMT+0000 (GMT Standard Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

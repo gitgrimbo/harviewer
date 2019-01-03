@@ -1,0 +1,3 @@
+/* See license.txt for terms of usage */
+
+define("tabs/schemaTab",["domplate/domplate","domplate/tabView","core/lib","i18n!nls/harViewer","syntax-highlighter/shCore","core/trace"],function(e,a,r,t,i,o){function n(){}var c=e.PRE;return n.prototype={id:"Schema",label:t.schemaTabLabel,bodyTag:c({class:"brush: javascript; toolbar: false;",name:"code"}),onUpdateBody:function(e,a){$.ajax({url:"scripts/preview/harSchema.js",context:this,success:function(e){var r=a.firstChild;r.innerHTML=e,i.SyntaxHighlighter.highlight(r)},error:function(e,a,r){o.error("SchemaTab.onUpdateBody; ERROR ",e,a,r)}})}},n});

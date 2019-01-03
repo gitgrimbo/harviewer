@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: tabs/homeTab.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: tabs/homeTab.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* See license.txt for terms of usage */
+
+/**
+ * @module tabs/homeTab
+ */
+define("tabs/homeTab", [
+    "domplate/domplate",
+    "domplate/tabView",
+    "core/lib",
+    "core/cookies",
+    "core/trace",
+    "i18n!nls/homeTab",
+    "text!tabs/homeTab.html",
+    "preview/harModel"
+],
+
+function(Domplate, TabView, Lib, Cookies, Trace, Strings, HomeTabHtml, HarModel) {
+
+var DIV = Domplate.DIV;
+
+//*************************************************************************************************
+// Home Tab
+
+/**
+ * @constructor module:tabs/homeTab
+ */
+function HomeTab() {}
+HomeTab.prototype = Lib.extend(TabView.Tab.prototype,
+/** @lends HomeTab.prototype */
+{
+    id: "Home",
+    label: Strings.homeTabLabel,
+
+    bodyTag:
+        DIV({"class": "homeBody"}),
+
+    onUpdateBody: function(tabView, body)
+    {
+        body = this.bodyTag.replace({}, body);
+
+        // Content of this tab is loaded by default (required above) since it's
+        // the first thing displayed to the user anyway.
+        // Also let's search and replace some constants in the template.
+        body.innerHTML = HomeTabHtml.replace("@HAR_SPEC_URL@", tabView.harSpecURL, "g");
+
+        // Register click handlers.
+        $("#appendPreview").click(Lib.bindFixed(this.onAppendPreview, this));
+        $(".linkAbout").click(Lib.bind(this.onAbout, this));
+
+        // Registers drag-and-drop event handlers. These will be responsible for
+        // auto-loading all dropped HAR files.
+        var content = $("#content");
+        content.bind("dragenter", Lib.bind(Lib.cancelEvent, Lib));
+        content.bind("dragover", Lib.bind(Lib.cancelEvent, Lib));
+        content.bind("drop", Lib.bind(this.onDrop, this));
+
+        // Update validate checkbox and register event handler.
+        this.validateNode = $("#validate");
+        var validate = Cookies.getCookie("validate");
+        if (validate)
+            this.validateNode.prop("checked", (validate === "false") ? false : true);
+        this.validateNode.change(Lib.bind(this.onValidationChange, this));
+
+        // Load examples
+        $(".example").click(Lib.bind(this.onLoadExample, this));
+    },
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+    // Events
+
+    onAppendPreview: function(jsonString)
+    {
+        if (!jsonString)
+            jsonString = $("#sourceEditor").val();
+
+        if (jsonString)
+            this.tabView.appendPreview(jsonString);
+    },
+
+    onAbout: function()
+    {
+        this.tabView.selectTabByName("About");
+    },
+
+    onValidationChange: function()
+    {
+        var validate = this.validateNode.prop("checked");
+        Cookies.setCookie("validate", validate);
+    },
+
+    onLoadExample: function(event)
+    {
+        var e = Lib.fixEvent(event);
+        var har = e.target.getAttribute("har");
+
+        var href = document.location.href;
+        var index = href.indexOf("?");
+        document.location = href.substr(0, index) + "?har=" + har;
+
+        // Show timeline and stats by default if an example is displayed.
+        Cookies.setCookie("timeline", true);
+        Cookies.setCookie("stats", true);
+    },
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+    onDrop: function(event)
+    {
+        var e = Lib.fixEvent(event);
+        Lib.cancelEvent(e);
+
+        try
+        {
+            this.handleDrop(event.originalEvent.dataTransfer);
+        }
+        catch (err)
+        {
+            Trace.exception("HomeTab.onDrop EXCEPTION", err);
+        }
+    },
+
+    handleDrop: function(dataTransfer)
+    {
+        if (!dataTransfer) {
+            return false;
+        }
+
+        var files = dataTransfer.files;
+        if (!files) {
+            return;
+        }
+
+        var filesArr = [].slice.call(files);
+        var harFiles = filesArr.filter(function(file) {
+            var ext = Lib.getFileExtension(file.name);
+            return (ext.toLowerCase() === "har");
+        });
+
+        harFiles.sort(function(f1, f2) {
+            return f1.name.localeCompare(f2.name);
+        });
+
+        var self = this;
+
+        // This function appends the previews one by one.
+        // The advantage of this (rather than trying to load all files
+        // concurrently) is if you drag-n-drop several large HAR files,
+        // you get visual feedback of the files loaded in the correct order.
+        function appendPreviews(files, idx) {
+            idx = idx || 0;
+            if (idx >= files.length) {
+                return;
+            }
+            var reader = self.getFileReader(files[idx], function(text) {
+                if (text) {
+                    self.onAppendPreview(text);
+                }
+                appendPreviews(files, idx + 1);
+            });
+            reader();
+        }
+
+        appendPreviews(harFiles);
+    },
+
+    /**
+     * File reader callback.
+     *
+     * @callback fileReaderCallback
+     * @param {String} contents
+     *  file contents
+     */
+
+     /**
+     * @param {Object} file
+     *  The file to get the text for.
+     * @param {fileReaderCallback} callback
+     *  Callback to receive the file contents.
+     */
+    getFileReader: function(file, callback)
+    {
+        return function fileReader()
+        {
+            if (typeof(file.getAsText) !== "undefined")
+            {
+                callback(file.getAsText(""));
+                return;
+            }
+
+            if (typeof(FileReader) !== "undefined")
+            {
+                var fileReader = new FileReader();
+                fileReader.onloadend = function() {
+                    callback(fileReader.result);
+                };
+                fileReader.readAsText(file);
+            }
+        };
+    },
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+    loadInProgress: function(show, msg)
+    {
+        $("#sourceEditor").val(show ? (msg ? msg : Strings.loadingHar) : "");
+    }
+});
+
+return HomeTab;
+
+//*************************************************************************************************
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-core_array.html">core/array</a></li><li><a href="module-core_cookies.html">core/cookies</a></li><li><a href="module-core_css.html">core/css</a></li><li><a href="module-core_date.html">core/date</a></li><li><a href="module-core_dom.html">core/dom</a></li><li><a href="module-core_dragdrop.html">core/dragdrop</a></li><li><a href="module-core_events.html">core/events</a></li><li><a href="module-core_json.html">core/json</a></li><li><a href="module-core_lib.html">core/lib</a></li><li><a href="module-core_mime.html">core/mime</a></li><li><a href="module-core_object.html">core/object</a></li><li><a href="module-core_rect.html">core/rect</a></li><li><a href="module-core_sniff.html">core/sniff</a></li><li><a href="module-core_StatsService.html">core/StatsService</a></li><li><a href="module-core_string.html">core/string</a></li><li><a href="module-core_trace.html">core/trace</a></li><li><a href="module-core_url.html">core/url</a></li><li><a href="module-domplate_domplate.html">domplate/domplate</a></li><li><a href="module-domplate_domTree.html">domplate/domTree</a></li><li><a href="module-domplate_infoTip.html">domplate/infoTip</a></li><li><a href="module-domplate_popupMenu.html">domplate/popupMenu</a></li><li><a href="module-domplate_tableView.html">domplate/tableView</a></li><li><a href="module-domplate_tabView.html">domplate/tabView</a></li><li><a href="module-domplate_toolbar.html">domplate/toolbar</a></li><li><a href="module-domplate_toolTip.html">domplate/toolTip</a></li><li><a href="module-harPreview.html">harPreview</a></li><li><a href="module-harViewer.html">harViewer</a></li><li><a href="module-preview_harModel.html">preview/harModel</a></li><li><a href="module-preview_harModelLoader.html">preview/harModelLoader</a></li><li><a href="module-tabs_aboutTab.html">tabs/aboutTab</a></li><li><a href="module-tabs_domTab.html">tabs/domTab</a></li><li><a href="module-tabs_harStats.html">tabs/harStats</a></li><li><a href="module-tabs_homeTab.html">tabs/homeTab</a></li><li><a href="module-tabs_pageTimeline.html">tabs/pageTimeline</a></li><li><a href="module-tabs_previewTab.html">tabs/previewTab</a></li><li><a href="module-tabs_schemaTab.html">tabs/schemaTab</a></li><li><a href="module-tabs_search.html">tabs/search</a></li></ul><h3>Classes</h3><ul><li><a href="module-core_dragdrop.Tracker.html">Tracker</a></li><li><a href="module-preview_harModel.html">preview/harModel</a></li><li><a href="module-tabs_aboutTab.html">tabs/aboutTab</a></li><li><a href="module-tabs_homeTab.html">tabs/homeTab</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Feb 16 2017 14:43:58 GMT+0000 (GMT Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

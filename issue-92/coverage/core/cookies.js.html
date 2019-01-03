@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for core\cookies.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">core/</a> cookies.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">14.29% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>3/21</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/26</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">14.29% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/7</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">14.29% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>3/21</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* See license.txt for terms of usage */
+&nbsp;
+/**
+ * @module core/cookies
+ */
+define([
+    "./string"
+],
+&nbsp;
+function(Str) {
+&nbsp;
+//*************************************************************************************************
+&nbsp;
+/**
+ * Helper functions for handling cookies.
+ * @alias module:core/cookies
+ */
+var Cookies =
+{
+    /**
+     * @param {String} name The name of the cookie to get the value of.
+     * @return {String} The cookie value if found, else `null` if the cookie exists but has no
+     *     value, else `undefined`.
+     */
+    getCookie: <span class="fstat-no" title="function not covered" >function(name)</span>
+    {
+<span class="cstat-no" title="statement not covered" >        var cookies = document.cookie.split(";");</span>
+<span class="cstat-no" title="statement not covered" >        for (var i= 0; i&lt;cookies.length; i++)</span>
+        {
+<span class="cstat-no" title="statement not covered" >            var cookie = cookies[i].split("=");</span>
+<span class="cstat-no" title="statement not covered" >            if (Str.trim(cookie[0]) === name)</span>
+<span class="cstat-no" title="statement not covered" >                return cookie[1].length ? unescape(Str.trim(cookie[1])) : null;</span>
+        }
+    },
+&nbsp;
+    /**
+     * Sets a cookie.
+     * @param {String} name The name of the cookie.
+     * @param {String} value The value of the cookie.
+     * @param {Number} expires Cookie expiry in days.
+     * @param {String} path The path of the cookie.
+     * @param {String} domain The domain of the cookie.
+     * @param {Boolean} secure Is the cookie secure?
+     */
+    setCookie: <span class="fstat-no" title="function not covered" >function(name, value, expires, path, domain, secure)</span>
+    {
+<span class="cstat-no" title="statement not covered" >        var today = new Date();</span>
+<span class="cstat-no" title="statement not covered" >        today.setTime(today.getTime());</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (expires)</span>
+<span class="cstat-no" title="statement not covered" >            expires = expires * 1000 * 60 * 60 * 24;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var expiresDate = new Date(today.getTime() + expires);</span>
+<span class="cstat-no" title="statement not covered" >        document.cookie = name + "=" + escape(value) +</span>
+            (expires ? ";expires=" + expiresDate.toGMTString() : "") +
+            (path ? ";path=" + path : "") +
+            (domain ? ";domain=" + domain : "") +
+            (secure ? ";secure" : "");
+    },
+&nbsp;
+    /**
+     * Removes a cookie, by setting its expiry to a date in the past.
+     * @param {String} name The name of the cookie.
+     * @param {String} path The path of the cookie.
+     * @param {String} domain The domain of the cookie.
+     */
+    removeCookie: <span class="fstat-no" title="function not covered" >function(name, path, domain)</span>
+    {
+<span class="cstat-no" title="statement not covered" >        if (this.getCookie(name))</span>
+        {
+<span class="cstat-no" title="statement not covered" >            document.cookie = name + "=" +</span>
+                (path ? ";path=" + path : "") +
+                (domain ? ";domain=" + domain : "") +
+                ";expires=Thu, 01-Jan-1970 00:00:01 GMT";
+        }
+    },
+&nbsp;
+    toggleCookie: <span class="fstat-no" title="function not covered" >function(name)</span>
+    {
+<span class="cstat-no" title="statement not covered" >        var value = this.getBooleanCookie(name);</span>
+<span class="cstat-no" title="statement not covered" >        this.setCookie(name, !value);</span>
+    },
+&nbsp;
+    /**
+     * Returns a `true`/`false` value for the cookie with name, `name`.
+     * @param {String} name The name of the cookie.
+     * @return {Boolean} `false` if the cookie does not exist, or has a value == `"false"`,
+     *     else `true`.
+     */
+    getBooleanCookie: <span class="fstat-no" title="function not covered" >function(name)</span>
+    {
+<span class="cstat-no" title="statement not covered" >        var value = this.getCookie(name);</span>
+<span class="cstat-no" title="statement not covered" >        return (!value || value === "false") ? false : true;</span>
+    },
+&nbsp;
+    /**
+     * Sets a `true`/`false` cookie value for the cookie with name, `name`.
+     * @param {String} name The name of the cookie.
+     * @param {Object} value The value to set.  If truthy, the cookie value will be set to
+     *     `"true"`, else it will be set to `"false"`.
+     */
+    setBooleanCookie: <span class="fstat-no" title="function not covered" >function(name, value)</span>
+    {
+<span class="cstat-no" title="statement not covered" >        this.setCookie(name, value ? "true" : "false");</span>
+    }
+};
+&nbsp;
+return Cookies;
+&nbsp;
+//*************************************************************************************************
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Feb 16 2017 14:44:00 GMT+0000 (GMT Standard Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

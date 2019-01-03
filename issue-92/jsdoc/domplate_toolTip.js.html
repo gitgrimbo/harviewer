@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: domplate/toolTip.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: domplate/toolTip.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* See license.txt for terms of usage */
+
+/**
+ * @module domplate/toolTip
+ */
+define("domplate/toolTip", [
+    "domplate/domplate",
+    "core/lib",
+    "core/trace"
+],
+
+function(Domplate, Lib, Trace) {
+
+var domplate = Domplate.domplate;
+var DIV = Domplate.DIV;
+
+// ************************************************************************************************
+// Globals
+
+var mouseEvents = "mousemove mouseover mousedown click mouseout";
+var currentToolTip = null;
+
+// ************************************************************************************************
+// Tooltip
+
+function ToolTip()
+{
+    this.element = null;
+}
+
+ToolTip.prototype = domplate(
+{
+    tag:
+        DIV({"class": "toolTip"},
+            DIV()
+        ),
+
+    show: function(target, options)
+    {
+        if (currentToolTip)
+            currentToolTip.hide();
+
+        this.target = target;
+
+        this.addListeners();
+
+        // Render the tooltip.
+        var body = Lib.getBody(document);
+        this.element = this.tag.append({options: options}, body, this);
+
+        // Compute coordinates and show.
+        var box = Lib.getElementBox(this.target);
+        this.element.style.top = box.top + box.height + "px";
+        this.element.style.left = box.left + box.width + "px";
+        this.element.style.display = "block";
+
+        currentToolTip = this;
+
+        return this.element;
+    },
+
+    hide: function()
+    {
+        if (!this.element)
+            return;
+
+        this.removeListeners();
+
+        // Remove UI
+        this.element.parentNode.removeChild(this.element);
+        currentToolTip = this.element = null;
+    },
+
+    addListeners: function()
+    {
+        this.onMouseEvent = Lib.bind(this.onMouseEvent, this);
+
+        // Register listeners for all mouse events.
+        $(document).bind(mouseEvents, this.onMouseEvent, true);
+    },
+
+    removeListeners: function()
+    {
+        // Remove listeners for mouse events.
+        $(document).unbind(mouseEvents, this.onMouseEvent, this, true);
+    },
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+    // Listeners
+
+    onMouseEvent: function(event)
+    {
+        var e = Lib.fixEvent(event);
+
+        // If the mouse is hovering within the tooltip pass the event further to it.
+        var ancestor = Lib.getAncestorByClass(e.target, "toolTip");
+        if (ancestor)
+            return;
+
+        var x = event.clientX;
+        var y = event.clientY;
+        var box = Lib.getElementBox(this.element);
+
+        if (event.type !== "click" &amp;&amp; event.type !== "mousedown")
+            box = Lib.inflateRect(box, 10, 10);
+
+        // If the mouse is hovering within near neighbourhood, ignore it.
+        if (Lib.pointInRect(box, x, y))
+        {
+            Lib.cancelEvent(e);
+            return;
+        }
+
+        // If the mouse is hovering over the target, ignore it too.
+        if (Lib.isAncestor(e.target, this.target))
+        {
+            Lib.cancelEvent(e);
+            return;
+        }
+
+        // The mouse is hovering far away, let's destroy the the tooltip.
+        this.hide();
+
+        Lib.cancelEvent(e);
+    }
+});
+
+// ************************************************************************************************
+
+return ToolTip;
+
+// **********************************************************************************************//
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-core_array.html">core/array</a></li><li><a href="module-core_cookies.html">core/cookies</a></li><li><a href="module-core_css.html">core/css</a></li><li><a href="module-core_date.html">core/date</a></li><li><a href="module-core_dom.html">core/dom</a></li><li><a href="module-core_dragdrop.html">core/dragdrop</a></li><li><a href="module-core_events.html">core/events</a></li><li><a href="module-core_json.html">core/json</a></li><li><a href="module-core_lib.html">core/lib</a></li><li><a href="module-core_mime.html">core/mime</a></li><li><a href="module-core_object.html">core/object</a></li><li><a href="module-core_rect.html">core/rect</a></li><li><a href="module-core_sniff.html">core/sniff</a></li><li><a href="module-core_StatsService.html">core/StatsService</a></li><li><a href="module-core_string.html">core/string</a></li><li><a href="module-core_trace.html">core/trace</a></li><li><a href="module-core_url.html">core/url</a></li><li><a href="module-domplate_domplate.html">domplate/domplate</a></li><li><a href="module-domplate_domTree.html">domplate/domTree</a></li><li><a href="module-domplate_infoTip.html">domplate/infoTip</a></li><li><a href="module-domplate_popupMenu.html">domplate/popupMenu</a></li><li><a href="module-domplate_tableView.html">domplate/tableView</a></li><li><a href="module-domplate_tabView.html">domplate/tabView</a></li><li><a href="module-domplate_toolbar.html">domplate/toolbar</a></li><li><a href="module-domplate_toolTip.html">domplate/toolTip</a></li><li><a href="module-harPreview.html">harPreview</a></li><li><a href="module-harViewer.html">harViewer</a></li><li><a href="module-preview_harModel.html">preview/harModel</a></li><li><a href="module-preview_harModelLoader.html">preview/harModelLoader</a></li><li><a href="module-tabs_aboutTab.html">tabs/aboutTab</a></li><li><a href="module-tabs_domTab.html">tabs/domTab</a></li><li><a href="module-tabs_harStats.html">tabs/harStats</a></li><li><a href="module-tabs_homeTab.html">tabs/homeTab</a></li><li><a href="module-tabs_pageTimeline.html">tabs/pageTimeline</a></li><li><a href="module-tabs_previewTab.html">tabs/previewTab</a></li><li><a href="module-tabs_schemaTab.html">tabs/schemaTab</a></li><li><a href="module-tabs_search.html">tabs/search</a></li></ul><h3>Classes</h3><ul><li><a href="module-core_dragdrop.Tracker.html">Tracker</a></li><li><a href="module-preview_harModel.html">preview/harModel</a></li><li><a href="module-tabs_aboutTab.html">tabs/aboutTab</a></li><li><a href="module-tabs_homeTab.html">tabs/homeTab</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Feb 16 2017 14:43:58 GMT+0000 (GMT Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

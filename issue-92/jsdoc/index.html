@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3>harviewer 1.0.0</h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><p>Stable URL (v2.0.17, 21 March 2016) - http://www.softwareishard.com/har/viewer/</p>
+<p>Up-to-date master - http://gitgrimbo.github.io/harviewer/master/ (and <a href="https://gitgrimbo.github.io/harviewer/master/">https</a>)</p>
+<h1>HAR Viewer</h1><ul>
+<li>Author: Jan Odvarko, odvarko@gmail.com</li>
+<li>http://www.softwareishard.com/</li>
+<li>Issue list: https://github.com/janodvarko/harviewer/issues</li>
+<li>Project home: https://github.com/janodvarko/harviewer</li>
+</ul>
+<h2>License</h2><p>HAR Viewer is free and open source software distributed under the <a href="https://github.com/janodvarko/harviewer/blob/master/webapp/license.txt">BSD License</a>.</p>
+<h2>Components</h2><ul>
+<li>RequireJS: http://requirejs.org/</li>
+<li>jQuery: http://jquery.com/</li>
+<li>jQuery JSON plugin: Jim Dalton (jim.dalton@furrybrains.com), based on http://www.JSON.org/json2.js</li>
+<li>Domplate + Domplate based templates: http://getfirebug.com</li>
+<li>Downloadify: http://github.com/dcneiner/Downloadify/</li>
+<li>SWFObject 2.0: http://code.google.com/p/swfobject/</li>
+<li>Code Syntax Highlighter: http://alexgorbatchev.com/SyntaxHighlighter/</li>
+<li>JSON Query: https://github.com/JasonSmith/jsonquery, http://www.sitepen.com/blog/2008/07/16/jsonquery-data-querying-beyond-jsonpath/</li>
+</ul>
+<h2>Build Tools</h2><ul>
+<li>Ant: http://ant.apache.org/</li>
+<li>JSDoc: http://usejsdoc.org/</li>
+<li>Node.js: https://nodejs.org/</li>
+<li>ESLint: http://eslint.org/</li>
+</ul>
+<h2>Testing</h2><ul>
+<li>Selenium: http://seleniumhq.org/</li>
+<li>Intern: https://theintern.github.io/ (preferred, see <a href="tests/">tests</a>)</li>
+<li>PHPUnit: http://www.phpunit.de/ (deprecated, see <a href="selenium/tests">tests</a>)</li>
+</ul>
+<h2>Development</h2><p>The HAR Viewer build process uses <code>Ant</code>, <code>Node.js</code> and <code>npm</code> as its build tools.</p>
+<p>Firstly, run <code>npm install</code> from the command line to install the <code>Node.js</code>/<code>npm</code> dependencies.</p>
+<h3>Linting</h3><p>HAR Viewer uses <a href="http://eslint.org/">ESLint</a> for linting.  It will be installed when you run <code>npm install</code> from the project root.</p>
+<p>To show lint errors only:</p>
+<pre class="prettyprint source"><code>npm run eslint</code></pre><p>To show lint errors and warnings:</p>
+<pre class="prettyprint source"><code>npm run eslint-full</code></pre><h3>Build</h3><p>To see a list of available tasks, use <code>ant -p</code> at the command line.</p>
+<p>Go to the project directory and execute the following command:</p>
+<p><code>ant build</code></p>
+<p>(<em>Indicative build time - about 9 seconds.  Node.js v6.0.0</em>)</p>
+<h3>JSDoc</h3><p>Go to the project directory and execute the following command:</p>
+<p><code>npm run jsdoc</code></p>
+<h3>Version and Google Analytics</h3><p>Certain build properties can be overridden at the command line.  For example, to provide the <code>VERSION</code> and <code>GOOGLE-ANALYTICS-PROFILE</code> values:</p>
+<p><code>ant build -DVERSION=3.0.0 -DGOOGLE-ANALYTICS-PROFILE=TRACKING_ID_HERE</code></p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-core_array.html">core/array</a></li><li><a href="module-core_cookies.html">core/cookies</a></li><li><a href="module-core_css.html">core/css</a></li><li><a href="module-core_date.html">core/date</a></li><li><a href="module-core_dom.html">core/dom</a></li><li><a href="module-core_dragdrop.html">core/dragdrop</a></li><li><a href="module-core_events.html">core/events</a></li><li><a href="module-core_json.html">core/json</a></li><li><a href="module-core_lib.html">core/lib</a></li><li><a href="module-core_mime.html">core/mime</a></li><li><a href="module-core_object.html">core/object</a></li><li><a href="module-core_rect.html">core/rect</a></li><li><a href="module-core_sniff.html">core/sniff</a></li><li><a href="module-core_StatsService.html">core/StatsService</a></li><li><a href="module-core_string.html">core/string</a></li><li><a href="module-core_trace.html">core/trace</a></li><li><a href="module-core_url.html">core/url</a></li><li><a href="module-domplate_domplate.html">domplate/domplate</a></li><li><a href="module-domplate_domTree.html">domplate/domTree</a></li><li><a href="module-domplate_infoTip.html">domplate/infoTip</a></li><li><a href="module-domplate_popupMenu.html">domplate/popupMenu</a></li><li><a href="module-domplate_tableView.html">domplate/tableView</a></li><li><a href="module-domplate_tabView.html">domplate/tabView</a></li><li><a href="module-domplate_toolbar.html">domplate/toolbar</a></li><li><a href="module-domplate_toolTip.html">domplate/toolTip</a></li><li><a href="module-harPreview.html">harPreview</a></li><li><a href="module-harViewer.html">harViewer</a></li><li><a href="module-preview_harModel.html">preview/harModel</a></li><li><a href="module-preview_harModelLoader.html">preview/harModelLoader</a></li><li><a href="module-tabs_aboutTab.html">tabs/aboutTab</a></li><li><a href="module-tabs_domTab.html">tabs/domTab</a></li><li><a href="module-tabs_harStats.html">tabs/harStats</a></li><li><a href="module-tabs_homeTab.html">tabs/homeTab</a></li><li><a href="module-tabs_pageTimeline.html">tabs/pageTimeline</a></li><li><a href="module-tabs_previewTab.html">tabs/previewTab</a></li><li><a href="module-tabs_schemaTab.html">tabs/schemaTab</a></li><li><a href="module-tabs_search.html">tabs/search</a></li></ul><h3>Classes</h3><ul><li><a href="module-core_dragdrop.Tracker.html">Tracker</a></li><li><a href="module-preview_harModel.html">preview/harModel</a></li><li><a href="module-tabs_aboutTab.html">tabs/aboutTab</a></li><li><a href="module-tabs_homeTab.html">tabs/homeTab</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Feb 16 2017 14:43:58 GMT+0000 (GMT Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

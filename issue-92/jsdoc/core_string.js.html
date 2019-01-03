@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: core/string.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: core/string.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* See license.txt for terms of usage */
+
+/**
+ * @module core/string
+ */
+define([
+    "./array",
+    "core/trace"
+],
+
+function(Arr, Trace) {
+
+//***********************************************************************************************//
+
+/**
+ * @alias module:core/string
+ */
+var Str = {};
+
+//*************************************************************************************************
+// Text Formatting
+
+/**
+ * @param {Number|undefined} bytes
+ * @return {String}
+ */
+Str.formatSize = function(bytes)
+{
+    var sizePrecision = 1; // Can be customizable from cookies?
+    sizePrecision = (sizePrecision > 2) ? 2 : sizePrecision;
+    sizePrecision = (sizePrecision &lt; -1) ? -1 : sizePrecision;
+
+    if (sizePrecision === -1)
+        return bytes + " B";
+
+    var a = Math.pow(10, sizePrecision);
+
+    if (bytes === -1 || bytes === undefined)
+        return "?";
+    else if (bytes === 0)
+        return "0";
+    else if (bytes &lt; 1024)
+        return bytes + " B";
+    else if (bytes &lt; (1024*1024))
+        return Math.round((bytes/1024)*a)/a + " KB";
+
+    return Math.round((bytes/(1024*1024))*a)/a + " MB";
+};
+
+/**
+ * @param {Number} elapsed
+ * @return {String}
+ */
+Str.formatTime = function(elapsed)
+{
+    if (elapsed === -1)
+        return "-"; // should be &amp;nbsp; but this will be escaped so we need something that is no whitespace
+    else if (elapsed &lt; 1000)
+        return elapsed + "ms";
+    else if (elapsed &lt; 60000)
+        return (Math.ceil(elapsed/10) / 100) + "s";
+
+    return (Math.ceil((elapsed/60000)*100)/100) + "m";
+};
+
+/**
+ * @param {Number} number
+ * @return {String}
+ */
+Str.formatNumber = function(number)
+{
+    number = String(number);
+    var x = number.split(".");
+    var x1 = x[0];
+    var x2 = x.length > 1 ? "." + x[1] : "";
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1))
+        x1 = x1.replace(rgx, "$1" + " " + "$2");
+    return x1 + x2;
+};
+
+/**
+ * @param {String} string
+ * @return {String}
+ */
+Str.formatString = function(string)
+{
+    var args = Arr.cloneArray(arguments);
+    string = args.shift();
+    for (var i=0; i&lt;args.length; i++)
+    {
+        var value = args[i].toString();
+        string = string.replace("%S", value);
+    }
+    return string;
+};
+
+//*************************************************************************************************
+// Text
+
+/**
+ * @param {String} str
+ * @param {String} searchString
+ * @param {String} position
+ * @return {Boolean}
+ */
+Str.startsWith = function(str, searchString, position)
+{
+    position = position || 0;
+    return str.indexOf(searchString, position) === position;
+};
+
+/**
+ * @param {String} text
+ * @return {String}
+ */
+Str.trim = function(text)
+{
+    return text.replace(/^\s*|\s*$/g, "");
+};
+
+/**
+ * @param {String} text
+ * @param {Boolean} noEscapeHTML
+ * @return {String}
+ */
+Str.wrapText = function(text, noEscapeHTML)
+{
+    var reNonAlphaNumeric = /[^A-Za-z_$0-9'"-]/;
+
+    var html = [];
+    var wrapWidth = 100;
+
+    // Split long text into lines and put every line into an &lt;pre> element (only in case
+    // if noEscapeHTML is false). This is useful for automatic scrolling when searching
+    // within response body (in order to scroll we need an element).
+    var lines = Str.splitLines(text);
+    for (var i = 0; i &lt; lines.length; ++i)
+    {
+        var line = lines[i];
+        while (line.length > wrapWidth)
+        {
+            var m = reNonAlphaNumeric.exec(line.substr(wrapWidth, 100));
+            var wrapIndex = wrapWidth+ (m ? m.index : 0);
+            var subLine = line.substr(0, wrapIndex);
+            line = line.substr(wrapIndex);
+
+            if (!noEscapeHTML) html.push("&lt;pre>");
+            html.push(noEscapeHTML ? subLine : Str.escapeHTML(subLine));
+            if (!noEscapeHTML) html.push("&lt;/pre>");
+        }
+
+        if (!noEscapeHTML) html.push("&lt;pre>");
+        html.push(noEscapeHTML ? line : Str.escapeHTML(line));
+        if (!noEscapeHTML) html.push("&lt;/pre>");
+    }
+
+    return html.join(noEscapeHTML ? "\n" : "");
+};
+
+/**
+ * @param {String} text
+ * @param {HTMLElement} textBox
+ * @param {Boolean} noEscapeHTML
+ * @return {String}
+ */
+Str.insertWrappedText = function(text, textBox, noEscapeHTML)
+{
+    textBox.innerHTML = "&lt;pre>" + Str.wrapText(text, noEscapeHTML) + "&lt;/pre>";
+};
+
+/**
+ * @param {String} text
+ * @return {Array}
+ */
+Str.splitLines = function(text)
+{
+    var reSplitLines = /\r\n|\r|\n/;
+
+    if (!text)
+        return [];
+    else if (text.split)
+        return text.split(reSplitLines);
+
+    var str = String(text);
+    var theSplit = str.split(reSplitLines);
+    return theSplit;
+};
+
+/**
+ * @param {String} value
+ * @return {String}
+ */
+Str.escapeHTML = function(value)
+{
+    function replaceChars(ch)
+    {
+        switch (ch)
+        {
+            case "&lt;":
+                return "&amp;lt;";
+            case ">":
+                return "&amp;gt;";
+            case "&amp;":
+                return "&amp;amp;";
+            case "'":
+                return "&amp;#39;";
+            case '"':
+                return "&amp;quot;";
+        }
+        return "?";
+    }
+    return String(value).replace(/[&lt;>&amp;"']/g, replaceChars);
+};
+
+/**
+ * @param {String} text
+ * @param {Number} limit
+ * @return {String}
+ */
+Str.cropString = function(text, limit)
+{
+    text = String(text);
+
+    var halfLimit = limit ? limit / 2 : 50;
+
+    return (text.length > limit) ?
+        Str.escapeNewLines(text.substr(0, halfLimit) + "..." + text.substr(text.length-halfLimit)) :
+        Str.escapeNewLines(text);
+};
+
+/**
+ * @param {String} value
+ * @return {String}
+ */
+Str.escapeNewLines = function(value)
+{
+    return value.replace(/\r/g, "\\r").replace(/\n/g, "\\n");
+};
+
+// ********************************************************************************************* //
+
+return Str;
+
+// ********************************************************************************************* //
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-core_array.html">core/array</a></li><li><a href="module-core_cookies.html">core/cookies</a></li><li><a href="module-core_css.html">core/css</a></li><li><a href="module-core_date.html">core/date</a></li><li><a href="module-core_dom.html">core/dom</a></li><li><a href="module-core_dragdrop.html">core/dragdrop</a></li><li><a href="module-core_events.html">core/events</a></li><li><a href="module-core_json.html">core/json</a></li><li><a href="module-core_lib.html">core/lib</a></li><li><a href="module-core_mime.html">core/mime</a></li><li><a href="module-core_object.html">core/object</a></li><li><a href="module-core_rect.html">core/rect</a></li><li><a href="module-core_sniff.html">core/sniff</a></li><li><a href="module-core_StatsService.html">core/StatsService</a></li><li><a href="module-core_string.html">core/string</a></li><li><a href="module-core_trace.html">core/trace</a></li><li><a href="module-core_url.html">core/url</a></li><li><a href="module-domplate_domplate.html">domplate/domplate</a></li><li><a href="module-domplate_domTree.html">domplate/domTree</a></li><li><a href="module-domplate_infoTip.html">domplate/infoTip</a></li><li><a href="module-domplate_popupMenu.html">domplate/popupMenu</a></li><li><a href="module-domplate_tableView.html">domplate/tableView</a></li><li><a href="module-domplate_tabView.html">domplate/tabView</a></li><li><a href="module-domplate_toolbar.html">domplate/toolbar</a></li><li><a href="module-domplate_toolTip.html">domplate/toolTip</a></li><li><a href="module-harPreview.html">harPreview</a></li><li><a href="module-harViewer.html">harViewer</a></li><li><a href="module-preview_harModel.html">preview/harModel</a></li><li><a href="module-preview_harModelLoader.html">preview/harModelLoader</a></li><li><a href="module-tabs_aboutTab.html">tabs/aboutTab</a></li><li><a href="module-tabs_domTab.html">tabs/domTab</a></li><li><a href="module-tabs_harStats.html">tabs/harStats</a></li><li><a href="module-tabs_homeTab.html">tabs/homeTab</a></li><li><a href="module-tabs_pageTimeline.html">tabs/pageTimeline</a></li><li><a href="module-tabs_previewTab.html">tabs/previewTab</a></li><li><a href="module-tabs_schemaTab.html">tabs/schemaTab</a></li><li><a href="module-tabs_search.html">tabs/search</a></li></ul><h3>Classes</h3><ul><li><a href="module-core_dragdrop.Tracker.html">Tracker</a></li><li><a href="module-preview_harModel.html">preview/harModel</a></li><li><a href="module-tabs_aboutTab.html">tabs/aboutTab</a></li><li><a href="module-tabs_homeTab.html">tabs/homeTab</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Feb 16 2017 14:43:58 GMT+0000 (GMT Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

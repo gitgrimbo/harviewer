@@ -1,0 +1,1 @@
+{"version":3,"sources":["?"],"names":["module","exports","rules","dot-notation","allowKeywords","new-cap","no-var","env","browser","amd","jquery"],"mappings":"AAAAA,OAAOC,SACHC,OAEIC,gBAAiB,SAAWC,eAAiB,IAG7CC,UAAW,OAIXC,SAAU,OAEdC,KACIC,SAAW,EACXC,KAAO,EACPC,QAAU","file":".eslintrc.js"}

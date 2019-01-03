@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for webapp/scripts/tabs/homeTab.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\..\index.html">All files</a> / <a href="index.html">webapp/scripts/tabs</a> homeTab.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/69</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/26</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/18</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/69</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* See license.txt for terms of usage */
+&nbsp;
+/**
+ * @module tabs/homeTab
+ */
+<span class="cstat-no" title="statement not covered" >define([</span>
+    "../domplate/domplate",
+    "../domplate/tabView",
+    "../core/lib",
+    "../core/cookies",
+    "../core/trace",
+    "i18n!../nls/homeTab",
+    "text!./homeTab.html",
+    "../preview/harModel",
+],
+&nbsp;
+<span class="fstat-no" title="function not covered" >fu</span>nction(Domplate, TabView, Lib, Cookies, Trace, Strings, HomeTabHtml, HarModel) {
+&nbsp;
+var DIV = <span class="cstat-no" title="statement not covered" >Domplate.DIV;</span>
+&nbsp;
+//*************************************************************************************************
+// Home Tab
+&nbsp;
+/**
+ * @constructor module:tabs/homeTab
+ */
+function <span class="fstat-no" title="function not covered" >HomeTab(</span>) {}
+<span class="cstat-no" title="statement not covered" >HomeTab.prototype = Lib.extend(TabView.Tab.prototype,</span>
+/** @lends HomeTab.prototype */
+{
+    id: "Home",
+    label: Strings.homeTabLabel,
+&nbsp;
+    bodyTag:
+        DIV({"class": "homeBody"}),
+&nbsp;
+    onUpdateBody: <span class="fstat-no" title="function not covered" >fu</span>nction(tabView, body)
+    {
+<span class="cstat-no" title="statement not covered" >        body = this.bodyTag.replace({}, body);</span>
+&nbsp;
+        // Content of this tab is loaded by default (required above) since it's
+        // the first thing displayed to the user anyway.
+        // Also let's search and replace some constants in the template.
+<span class="cstat-no" title="statement not covered" >        body.innerHTML = HomeTabHtml.replace("@HAR_SPEC_URL@", tabView.harSpecURL, "g");</span>
+&nbsp;
+        // Register click handlers.
+<span class="cstat-no" title="statement not covered" >        $("#appendPreview").click(Lib.bindFixed(this.onAppendPreview, this));</span>
+<span class="cstat-no" title="statement not covered" >        $(".linkAbout").click(Lib.bind(this.onAbout, this));</span>
+&nbsp;
+        // Registers drag-and-drop event handlers. These will be responsible for
+        // auto-loading all dropped HAR files.
+        var content = <span class="cstat-no" title="statement not covered" >$("#content");</span>
+<span class="cstat-no" title="statement not covered" >        content.bind("dragenter", Lib.bind(Lib.cancelEvent, Lib));</span>
+<span class="cstat-no" title="statement not covered" >        content.bind("dragover", Lib.bind(Lib.cancelEvent, Lib));</span>
+<span class="cstat-no" title="statement not covered" >        content.bind("drop", Lib.bind(this.onDrop, this));</span>
+&nbsp;
+        // Update validate checkbox and register event handler.
+<span class="cstat-no" title="statement not covered" >        this.validateNode = $("#validate");</span>
+        var validate = <span class="cstat-no" title="statement not covered" >Cookies.getCookie("validate");</span>
+<span class="cstat-no" title="statement not covered" >        if (validate)</span>
+<span class="cstat-no" title="statement not covered" >            this.validateNode.prop("checked", (validate === "false") ? false : true);</span>
+<span class="cstat-no" title="statement not covered" >        this.validateNode.change(Lib.bind(this.onValidationChange, this));</span>
+&nbsp;
+        // Load examples
+<span class="cstat-no" title="statement not covered" >        $(".example").click(Lib.bind(this.onLoadExample, this));</span>
+    },
+&nbsp;
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+    // Events
+&nbsp;
+    onAppendPreview: <span class="fstat-no" title="function not covered" >fu</span>nction(jsonString)
+    {
+<span class="cstat-no" title="statement not covered" >        if (!jsonString)</span>
+<span class="cstat-no" title="statement not covered" >            jsonString = $("#sourceEditor").val();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (jsonString)</span>
+<span class="cstat-no" title="statement not covered" >            this.tabView.appendPreview(jsonString);</span>
+    },
+&nbsp;
+    onAbout: <span class="fstat-no" title="function not covered" >fu</span>nction()
+    {
+<span class="cstat-no" title="statement not covered" >        this.tabView.selectTabByName("About");</span>
+    },
+&nbsp;
+    onValidationChange: <span class="fstat-no" title="function not covered" >fu</span>nction()
+    {
+        var validate = <span class="cstat-no" title="statement not covered" >this.validateNode.prop("checked");</span>
+<span class="cstat-no" title="statement not covered" >        Cookies.setCookie("validate", validate);</span>
+    },
+&nbsp;
+    onLoadExample: <span class="fstat-no" title="function not covered" >fu</span>nction(event)
+    {
+        var e = <span class="cstat-no" title="statement not covered" >Lib.fixEvent(event);</span>
+        var har = <span class="cstat-no" title="statement not covered" >e.target.getAttribute("har");</span>
+&nbsp;
+        var href = <span class="cstat-no" title="statement not covered" >document.location.href;</span>
+        var index = <span class="cstat-no" title="statement not covered" >href.indexOf("?");</span>
+<span class="cstat-no" title="statement not covered" >        document.location = href.substr(0, index) + "?har=" + har;</span>
+&nbsp;
+        // Show timeline and stats by default if an example is displayed.
+<span class="cstat-no" title="statement not covered" >        Cookies.setCookie("timeline", true);</span>
+<span class="cstat-no" title="statement not covered" >        Cookies.setCookie("stats", true);</span>
+    },
+&nbsp;
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+&nbsp;
+    onDrop: <span class="fstat-no" title="function not covered" >fu</span>nction(event)
+    {
+        var e = <span class="cstat-no" title="statement not covered" >Lib.fixEvent(event);</span>
+<span class="cstat-no" title="statement not covered" >        Lib.cancelEvent(e);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        try {</span>
+<span class="cstat-no" title="statement not covered" >            this.handleDrop(event.originalEvent.dataTransfer);</span>
+        } catch (err) {
+<span class="cstat-no" title="statement not covered" >            Trace.exception("HomeTab.onDrop EXCEPTION", err);</span>
+        }
+    },
+&nbsp;
+    handleDrop: <span class="fstat-no" title="function not covered" >fu</span>nction(dataTransfer)
+    {
+        function <span class="fstat-no" title="function not covered" >notSupported(</span>reason) {
+<span class="cstat-no" title="statement not covered" >            alert("File drag and drop not supported for this browser [" + reason + "]");</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (!dataTransfer) {</span>
+<span class="cstat-no" title="statement not covered" >            return false;</span>
+        }
+&nbsp;
+        var files = <span class="cstat-no" title="statement not covered" >dataTransfer.files;</span>
+<span class="cstat-no" title="statement not covered" >        if (!files) {</span>
+<span class="cstat-no" title="statement not covered" >            return notSupported("dataTransfer.files not present");</span>
+        }
+&nbsp;
+        var filesArr = <span class="cstat-no" title="statement not covered" >[].slice.call(files);</span>
+        var harFiles = <span class="cstat-no" title="statement not covered" >filesArr.filter(<span class="fstat-no" title="function not covered" >fu</span>nction(file) {</span>
+            var ext = <span class="cstat-no" title="statement not covered" >Lib.getFileExtension(file.name);</span>
+<span class="cstat-no" title="statement not covered" >            return (ext.toLowerCase() === "har");</span>
+        });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        harFiles.sort(<span class="fstat-no" title="function not covered" >fu</span>nction(f1, f2) {</span>
+<span class="cstat-no" title="statement not covered" >            return f1.name.localeCompare(f2.name);</span>
+        });
+&nbsp;
+        var self = <span class="cstat-no" title="statement not covered" >this;</span>
+&nbsp;
+        // This function appends the previews one by one.
+        // The advantage of this (rather than trying to load all files
+        // concurrently) is if you drag-n-drop several large HAR files,
+        // you get visual feedback of the files loaded in the correct order.
+        function <span class="fstat-no" title="function not covered" >appendPreviews(</span>files, idx) {
+<span class="cstat-no" title="statement not covered" >            idx = idx || 0;</span>
+<span class="cstat-no" title="statement not covered" >            if (idx &gt;= files.length) {</span>
+<span class="cstat-no" title="statement not covered" >                return;</span>
+            }
+            var reader = <span class="cstat-no" title="statement not covered" >self.getFileReader(files[idx], <span class="fstat-no" title="function not covered" >fu</span>nction(text) {</span>
+<span class="cstat-no" title="statement not covered" >                if (text) {</span>
+<span class="cstat-no" title="statement not covered" >                    self.onAppendPreview(text);</span>
+                }
+<span class="cstat-no" title="statement not covered" >                appendPreviews(files, idx + 1);</span>
+            });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (reader) {</span>
+<span class="cstat-no" title="statement not covered" >                reader();</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >                return notSupported("FileReader API not present");</span>
+            }
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        appendPreviews(harFiles);</span>
+    },
+&nbsp;
+    /**
+     * File reader callback.
+     *
+     * @callback fileReaderCallback
+     * @param {String} contents
+     *  file contents
+     */
+&nbsp;
+     /**
+     * @param {Object} file
+     *  The file to get the text for.
+     * @param {fileReaderCallback} callback
+     *  Callback to receive the file contents.
+     * @return {function}
+     *  The file reader function, or null if not supported.
+     */
+    getFileReader: <span class="fstat-no" title="function not covered" >fu</span>nction(file, callback)
+    {
+<span class="cstat-no" title="statement not covered" >        if (typeof(FileReader) !== "undefined") {</span>
+<span class="cstat-no" title="statement not covered" >            return function <span class="fstat-no" title="function not covered" >fileReader(</span>) {</span>
+                var fileReader = <span class="cstat-no" title="statement not covered" >new FileReader();</span>
+<span class="cstat-no" title="statement not covered" >                fileReader.onloadend = <span class="fstat-no" title="function not covered" >fu</span>nction() {</span>
+<span class="cstat-no" title="statement not covered" >                    callback(fileReader.result);</span>
+                };
+<span class="cstat-no" title="statement not covered" >                fileReader.readAsText(file);</span>
+            };
+        }
+<span class="cstat-no" title="statement not covered" >        return null;</span>
+    },
+&nbsp;
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+&nbsp;
+    loadInProgress: <span class="fstat-no" title="function not covered" >fu</span>nction(show, msg)
+    {
+<span class="cstat-no" title="statement not covered" >        $("#sourceEditor").val(show ? (msg ? msg : Strings.loadingHar) : "");</span>
+    }
+});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >return HomeTab;</span>
+&nbsp;
+//*************************************************************************************************
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Jan 03 2019 13:56:41 GMT+0000 (Greenwich Mean Time)
+</div>
+</div>
+<script src="..\..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\..\sorter.js"></script>
+</body>
+</html>

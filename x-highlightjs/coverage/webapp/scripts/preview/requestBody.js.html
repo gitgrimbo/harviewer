@@ -1,0 +1,2714 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for webapp/scripts/preview/requestBody.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\..\index.html">All files</a> / <a href="index.html">webapp/scripts/preview</a> requestBody.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/263</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/107</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/58</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/263</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642
+643
+644
+645
+646
+647
+648
+649
+650
+651
+652
+653
+654
+655
+656
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673
+674
+675
+676
+677
+678
+679
+680
+681
+682
+683
+684
+685
+686
+687
+688
+689
+690
+691
+692
+693
+694
+695
+696
+697
+698
+699
+700
+701
+702
+703
+704
+705
+706
+707
+708
+709
+710
+711
+712
+713
+714
+715
+716
+717
+718
+719
+720
+721
+722
+723
+724
+725
+726
+727
+728
+729
+730
+731
+732
+733
+734
+735
+736
+737
+738
+739
+740
+741
+742
+743
+744
+745
+746
+747
+748
+749
+750
+751
+752
+753
+754
+755
+756
+757
+758
+759
+760
+761
+762
+763
+764
+765
+766
+767
+768
+769
+770
+771
+772
+773
+774
+775
+776
+777
+778
+779
+780
+781
+782
+783
+784
+785
+786
+787
+788
+789
+790
+791
+792
+793
+794
+795
+796
+797
+798
+799
+800
+801
+802
+803
+804
+805
+806
+807
+808
+809
+810
+811
+812
+813
+814
+815
+816
+817
+818
+819
+820
+821
+822
+823
+824
+825
+826
+827
+828
+829
+830
+831
+832
+833
+834
+835
+836
+837
+838
+839
+840
+841
+842
+843
+844
+845
+846
+847
+848
+849
+850
+851
+852
+853
+854
+855
+856
+857
+858
+859
+860
+861
+862
+863
+864
+865
+866
+867
+868
+869
+870
+871
+872
+873
+874
+875
+876
+877
+878
+879
+880
+881
+882
+883
+884</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* See license.txt for terms of usage */
+&nbsp;
+<span class="cstat-no" title="statement not covered" >define([</span>
+    "../domplate/domplate",
+    "i18n!../nls/requestBody",
+    "../core/lib",
+    "../core/cookies",
+    "../domplate/tabView",
+    "../domplate/domTree",
+    "../core/dragdrop",
+],
+&nbsp;
+<span class="fstat-no" title="function not covered" >fu</span>nction(Domplate, Strings, Lib, Cookies, TabView, DomTree, DragDrop) {
+&nbsp;
+var domplate = <span class="cstat-no" title="statement not covered" >Domplate.domplate;</span>
+var A = <span class="cstat-no" title="statement not covered" >Domplate.A;</span>
+var CODE = <span class="cstat-no" title="statement not covered" >Domplate.CODE;</span>
+var DIV = <span class="cstat-no" title="statement not covered" >Domplate.DIV;</span>
+var FOR = <span class="cstat-no" title="statement not covered" >Domplate.FOR;</span>
+var IFRAME = <span class="cstat-no" title="statement not covered" >Domplate.IFRAME;</span>
+var PRE = <span class="cstat-no" title="statement not covered" >Domplate.PRE;</span>
+var TABLE = <span class="cstat-no" title="statement not covered" >Domplate.TABLE;</span>
+var TBODY = <span class="cstat-no" title="statement not covered" >Domplate.TBODY;</span>
+var TD = <span class="cstat-no" title="statement not covered" >Domplate.TD;</span>
+var TR = <span class="cstat-no" title="statement not covered" >Domplate.TR;</span>
+&nbsp;
+//*************************************************************************************************
+// Request Body
+&nbsp;
+/**
+ * @domplate This object represents a template for request body that is displayed if a request
+ * is expanded within the UI. It's content is composed from set of tabs that are dynamically
+ * appended as necessary (depends on actual data).
+ *
+ * TODO: There should be an APIs allowing to register a new tab from other modules. The same
+ * approach as within the Firebug Net panel should be used.
+ *
+ * There are currently following tabs built-in:
+ * {@link HeadersTab}: request and response headers
+ * {@link ParamsTab}: URL parameters
+ * {@link SentDataTab}: posted data
+ * {@link ResponseTab}: request response body
+ * {@link ImageTab}: Builds an IMG tag with a data URI built from response.content.text
+ * {@link ExternalImageTab}: Builds an IMG tag with src=request.url
+ * {@link CacheTab}: browser cache entry meta-data
+ * {@link HighlightedTab}: response body syntax highlighted
+ * {@link JsonTab}: response body as JSON tree
+ * {@link XmlTab}: response body as XML tree
+ * {@link HtmlTab}: Preview for HTML responses
+ * {@link DataURLTab}: Data URLs
+ */
+function <span class="fstat-no" title="function not covered" >RequestBody(</span>) {}
+&nbsp;
+/**
+ * List of types of tab that RequestBody supports.
+ */
+<span class="cstat-no" title="statement not covered" >RequestBody.tabTypes = [</span>
+    HeadersTab,
+    ParamsTab,
+    SentDataTab,
+    ResponseTab,
+    HighlightedTab,
+    JsonTab,
+    XmlTab,
+    ImageTab,
+    ExternalImageTab,
+    CacheTab,
+    HtmlTab,
+    DataURLTab
+];
+&nbsp;
+<span class="cstat-no" title="statement not covered" >RequestBody.prototype = domplate(</span>
+/** @lends RequestBody */
+{
+    render: <span class="fstat-no" title="function not covered" >fu</span>nction(parentNode, file)
+    {
+        // Crete tabView and append all necessary tabs.
+        var tabView = <span class="cstat-no" title="statement not covered" >new TabView("requestBody");</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        RequestBody.tabTypes.forEach(<span class="fstat-no" title="function not covered" >fu</span>nction(TabType) {</span>
+<span class="cstat-no" title="statement not covered" >            if (TabType.canShowFile(file)) {</span>
+<span class="cstat-no" title="statement not covered" >                tabView.appendTab(new TabType(file));</span>
+            }
+        });
+&nbsp;
+        //xxxHonza
+        //if (file.request.cookies || file.response.cookies)
+        //    tabView.appendTab(new CookiesTab(file));
+&nbsp;
+        // Finally, render the tabView and select the first tab by default
+        var element = <span class="cstat-no" title="statement not covered" >tabView.render(parentNode);</span>
+<span class="cstat-no" title="statement not covered" >        if (tabView.tabs.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >            tabView.selectTabByName(tabView.tabs[0].id);</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return element;</span>
+    }
+});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >RequestBody.canShowFile = <span class="fstat-no" title="function not covered" >fu</span>nction(file) {</span>
+<span class="cstat-no" title="statement not covered" >    return RequestBody.tabTypes.some(<span class="fstat-no" title="function not covered" >fu</span>nction(TabType) {</span>
+<span class="cstat-no" title="statement not covered" >        return TabType.canShowFile(file);</span>
+    });
+};
+&nbsp;
+<span class="cstat-no" title="statement not covered" >RequestBody.canDecode = <span class="fstat-no" title="function not covered" >fu</span>nction(encoding) {</span>
+<span class="cstat-no" title="statement not covered" >    if (!encoding) {</span>
+<span class="cstat-no" title="statement not covered" >        return true;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if ("base64" !== encoding) {</span>
+        // only base64 supported
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if ("undefined" === typeof atob) {</span>
+        // it's base64 but we can't decode it.  E.g. IE9.
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return true;</span>
+};
+&nbsp;
+<span class="cstat-no" title="statement not covered" >RequestBody.decode = <span class="fstat-no" title="function not covered" >fu</span>nction(text, encoding) {</span>
+<span class="cstat-no" title="statement not covered" >    return ("base64" === encoding) ? atob(text) : text;</span>
+};
+&nbsp;
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+&nbsp;
+function <span class="fstat-no" title="function not covered" >HeadersTab(</span>file)
+{
+<span class="cstat-no" title="statement not covered" >    this.file = file;</span>
+}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >HeadersTab.prototype = domplate(TabView.Tab.prototype,</span>
+{
+    id: "Headers",
+    label: Strings.Headers,
+&nbsp;
+    bodyTag:
+        DIV(
+            DIV(
+                A({"class": "netInfoRequestURL"})
+            ),
+            TABLE({"class": "netInfoHeadersText netInfoText netInfoHeadersTable",
+                cellpadding: 0, cellspacing: 0},
+                TBODY(
+                    TR({"class": "netInfoResponseVersionTitle"},
+                        TD({colspan: 2},
+                            DIV({"class": "netInfoHeadersGroup"}, Strings.ResponseVersion)
+                        )
+                    ),
+                    TR({"class": "netInfoResponseHeadersTitle"},
+                        TD({colspan: 2},
+                            DIV({"class": "netInfoHeadersGroup"}, Strings.ResponseHeaders)
+                        )
+                    ),
+                    TR({"class": "netInfoRequestVersionTitle"},
+                        TD({colspan: 2},
+                            DIV({"class": "netInfoHeadersGroup"}, Strings.RequestVersion)
+                        )
+                    ),
+                    TR({"class": "netInfoRequestHeadersTitle"},
+                        TD({colspan: 2},
+                            DIV({"class": "netInfoHeadersGroup"}, Strings.RequestHeaders)
+                    )
+                )
+            )
+        )
+    ),
+&nbsp;
+    headerDataTag:
+        FOR("param", "$headers",
+            TR(
+                TD({"class": "netInfoParamName"}, "$param.name"),
+                TD({"class": "netInfoParamValue"},
+                    PRE("$param|getParamValue")
+                )
+            )
+        ),
+&nbsp;
+    getParamValue: <span class="fstat-no" title="function not covered" >fu</span>nction(param)
+    {
+        // This value is inserted into PRE element and so, make sure the HTML isn't escaped (1210).
+        // This is why the second parameter is true.
+        // The PRE element preserves whitespaces so they are displayed the same, as they come from
+        // the server (1194).
+<span class="cstat-no" title="statement not covered" >        return Lib.wrapText(param.value, true);</span>
+    },
+&nbsp;
+    onUpdateBody: <span class="fstat-no" title="function not covered" >fu</span>nction(tabView, body)
+    {
+        var url = <span class="cstat-no" title="statement not covered" >this.file.request.url;</span>
+<span class="cstat-no" title="statement not covered" >        if (url) {</span>
+            var anchor = <span class="cstat-no" title="statement not covered" >$(body).find("a")[0];</span>
+<span class="cstat-no" title="statement not covered" >            anchor.setAttribute("href", url);</span>
+<span class="cstat-no" title="statement not covered" >            anchor.appendChild(document.createTextNode(Lib.cropString(url, 128)));</span>
+        }
+&nbsp;
+        var responseVersion = <span class="cstat-no" title="statement not covered" >{ name: "", value: this.file.response.httpVersion };</span>
+<span class="cstat-no" title="statement not covered" >        this.insertHeaderRows(body, [responseVersion], "Headers", "ResponseVersion");</span>
+<span class="cstat-no" title="statement not covered" >        this.insertHeaderRows(body, this.file.response.headers || [], "Headers", "ResponseHeaders");</span>
+&nbsp;
+        var requestVersion = <span class="cstat-no" title="statement not covered" >{ name: "", value: this.file.request.httpVersion };</span>
+<span class="cstat-no" title="statement not covered" >        this.insertHeaderRows(body, [requestVersion], "Headers", "RequestVersion");</span>
+<span class="cstat-no" title="statement not covered" >        this.insertHeaderRows(body, this.file.request.headers || [], "Headers", "RequestHeaders");</span>
+    },
+&nbsp;
+    insertHeaderRows: <span class="fstat-no" title="function not covered" >fu</span>nction(parentNode, headers, tableName, rowName)
+    {
+        var headersTable = <span class="cstat-no" title="statement not covered" >Lib.getElementByClass(parentNode, "netInfo" + tableName + "Table");</span>
+        var titleRow = <span class="cstat-no" title="statement not covered" >Lib.getElementByClass(headersTable, "netInfo" + rowName + "Title");</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (headers.length) {</span>
+<span class="cstat-no" title="statement not covered" >            this.headerDataTag.insertRows({headers: headers}, titleRow ? titleRow : parentNode);</span>
+<span class="cstat-no" title="statement not covered" >            Lib.removeClass(titleRow, "collapsed");</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >            Lib.setClass(titleRow, "collapsed");</span>
+        }
+    }
+});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >HeadersTab.canShowFile = <span class="fstat-no" title="function not covered" >fu</span>nction(file) {</span>
+    // We always show the 'headers' because we always show the HTTP version and request URL.
+<span class="cstat-no" title="statement not covered" >    return true;</span>
+};
+&nbsp;
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+&nbsp;
+function <span class="fstat-no" title="function not covered" >ImageTab(</span>file)
+{
+<span class="cstat-no" title="statement not covered" >    this.file = file;</span>
+}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >ImageTab.prototype = domplate(TabView.Tab.prototype,</span>
+{
+    id: "Image",
+    label: Strings.Image,
+    title: Strings.ImageTitle,
+&nbsp;
+    bodyTag:
+        DIV({"class": "netInfoImageText netInfoText"}),
+&nbsp;
+    onUpdateBody: <span class="fstat-no" title="function not covered" >fu</span>nction(tabView, body)
+    {
+        function <span class="fstat-no" title="function not covered" >createImageSrc(</span>content) {
+            var mimeType = <span class="cstat-no" title="statement not covered" >Lib.extractMimeType(content.mimeType);</span>
+            // https://css-tricks.com/data-uris/
+<span class="cstat-no" title="statement not covered" >            return "data:" + mimeType + ";base64," + content.text;</span>
+        }
+&nbsp;
+        // Works for all supported browsers except IE9/IE10 where the image
+        // will have width=0 and height=0, so cannot be seen by the user.
+        function <span class="fstat-no" title="function not covered" >addUsingCreateElement(</span>file, container) {
+            var responseImage = <span class="cstat-no" title="statement not covered" >body.ownerDocument.createElement("img");</span>
+&nbsp;
+            var content = <span class="cstat-no" title="statement not covered" >file.response.content;</span>
+<span class="cstat-no" title="statement not covered" >            responseImage.src = createImageSrc(content);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            container.appendChild(responseImage);</span>
+        }
+&nbsp;
+        // Works for all supported browsers including IE9/IE10
+        function <span class="fstat-no" title="function not covered" >addUsingInnerHtml(</span>file, container) {
+            var content = <span class="cstat-no" title="statement not covered" >file.response.content;</span>
+&nbsp;
+            // http://stackoverflow.com/a/475217/319878
+            var base64regex = <span class="cstat-no" title="statement not covered" >/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/;</span>
+&nbsp;
+            // We are going to use dangerous innerHTML, so check the data first.
+<span class="cstat-no" title="statement not covered" >            if (content.text.match(base64regex)) {</span>
+                // https://css-tricks.com/data-uris/
+                var src = <span class="cstat-no" title="statement not covered" >createImageSrc(content);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                container.innerHTML = "&lt;img src=" + src + "&gt;";</span>
+            } else {
+                // error?
+            }
+        }
+&nbsp;
+        var imageTextBox = <span class="cstat-no" title="statement not covered" >Lib.getElementByClass(body, "netInfoImageText");</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        Lib.clearNode(imageTextBox);</span>
+&nbsp;
+        // IE9 and IE10 will set the image width and height to 0 if using the
+        // createElement() approach.  The innerHTML approach works for those browsers.
+        // https://msdn.microsoft.com/en-us/library/cc196988(v=vs.85).aspx
+        var ie9mode = (<span class="cstat-no" title="statement not covered" >9 === document.documentMode)</span>;
+        var ie10mode = (<span class="cstat-no" title="statement not covered" >10 === document.documentMode)</span>
+        var mustUseInnerHtmlForSvgImage = (<span class="cstat-no" title="statement not covered" >ie9mode || ie10mode)</span>;
+<span class="cstat-no" title="statement not covered" >        if (mustUseInnerHtmlForSvgImage) {</span>
+<span class="cstat-no" title="statement not covered" >            addUsingInnerHtml(this.file, imageTextBox);</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >            addUsingCreateElement(this.file, imageTextBox);</span>
+        }
+    }
+});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >ImageTab.isFileImage = <span class="fstat-no" title="function not covered" >fu</span>nction(file) {</span>
+    var content = <span class="cstat-no" title="statement not covered" >file.response.content;</span>
+<span class="cstat-no" title="statement not covered" >    if (!content) {</span>
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+    }
+&nbsp;
+    var mimeType = <span class="cstat-no" title="statement not covered" >Lib.extractMimeType(content.mimeType || "");</span>
+<span class="cstat-no" title="statement not covered" >    return Lib.startsWith(mimeType, "image/");</span>
+};
+&nbsp;
+<span class="cstat-no" title="statement not covered" >ImageTab.canShowFile = <span class="fstat-no" title="function not covered" >fu</span>nction(file) {</span>
+    var content = <span class="cstat-no" title="statement not covered" >file.response.content;</span>
+<span class="cstat-no" title="statement not covered" >    return ImageTab.isFileImage(file) &amp;&amp; (content.text &amp;&amp; "base64" === content.encoding);</span>
+};
+&nbsp;
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+&nbsp;
+function <span class="fstat-no" title="function not covered" >ExternalImageTab(</span>file)
+{
+<span class="cstat-no" title="statement not covered" >    this.file = file;</span>
+}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >ExternalImageTab.prototype = domplate(TabView.Tab.prototype,</span>
+{
+    id: "ExternalImage",
+    label: Strings.ExternalImage,
+    title: Strings.ExternalImageTitle,
+&nbsp;
+    bodyTag:
+        DIV({"class": "netInfoExternalImageText netInfoText"}),
+&nbsp;
+    onUpdateBody: <span class="fstat-no" title="function not covered" >fu</span>nction(tabView, body)
+    {
+        var imageTextBox = <span class="cstat-no" title="statement not covered" >Lib.getElementByClass(body, "netInfoExternalImageText");</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        Lib.clearNode(imageTextBox);</span>
+&nbsp;
+        var responseImage = <span class="cstat-no" title="statement not covered" >body.ownerDocument.createElement("img");</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        responseImage.src = this.file.request.url;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        imageTextBox.appendChild(responseImage);</span>
+    }
+});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >ExternalImageTab.canShowFile = <span class="fstat-no" title="function not covered" >fu</span>nction(file) {</span>
+<span class="cstat-no" title="statement not covered" >    return ImageTab.isFileImage(file);</span>
+};
+&nbsp;
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+&nbsp;
+function <span class="fstat-no" title="function not covered" >ResponseTab(</span>file)
+{
+<span class="cstat-no" title="statement not covered" >    this.file = file;</span>
+}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >ResponseTab.prototype = domplate(TabView.Tab.prototype,</span>
+{
+    id: "Response",
+    label: Strings.Response,
+&nbsp;
+    bodyTag:
+        DIV({"class": "netInfoResponseText netInfoText"},
+            PRE()
+        ),
+&nbsp;
+    onUpdateBody: <span class="fstat-no" title="function not covered" >fu</span>nction(tabView, body)
+    {
+        var responseTextBox = <span class="cstat-no" title="statement not covered" >Lib.getElementByClass(body, "netInfoResponseText");</span>
+&nbsp;
+        var pre = <span class="cstat-no" title="statement not covered" >responseTextBox.firstChild;</span>
+<span class="cstat-no" title="statement not covered" >        Lib.clearNode(pre);</span>
+&nbsp;
+        var text = <span class="cstat-no" title="statement not covered" >this.file.response.content.text;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        Lib.insertWrappedText(text, pre);</span>
+    }
+});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >ResponseTab.canShowFile = <span class="fstat-no" title="function not covered" >fu</span>nction(file) {</span>
+<span class="cstat-no" title="statement not covered" >    return (file.response.content.text &amp;&amp; file.response.content.text.length &gt; 0);</span>
+};
+&nbsp;
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+&nbsp;
+function <span class="fstat-no" title="function not covered" >HighlightedTab(</span>file)
+{
+<span class="cstat-no" title="statement not covered" >    this.file = file;</span>
+}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >HighlightedTab.prototype = domplate(TabView.Tab.prototype,</span>
+{
+    id: "Highlighted",
+    label: Strings.Highlighted,
+&nbsp;
+    bodyTag:
+        DIV({"class": "netInfoHighlightedText netInfoText"},
+            PRE(CODE("class", "javascript"))
+        ),
+&nbsp;
+    onUpdateBody: <span class="fstat-no" title="function not covered" >fu</span>nction(tabView, body)
+    {
+        var responseTextBox = <span class="cstat-no" title="statement not covered" >Lib.getElementByClass(body, "netInfoHighlightedText");</span>
+&nbsp;
+        var code = <span class="cstat-no" title="statement not covered" >responseTextBox.firstChild.firstChild;</span>
+<span class="cstat-no" title="statement not covered" >        Lib.clearNode(code);</span>
+&nbsp;
+        var content = <span class="cstat-no" title="statement not covered" >this.file.response.content;</span>
+        var text = <span class="cstat-no" title="statement not covered" >content.text;</span>
+        // Remove any mime type parameters (if any)
+        var mimeType = <span class="cstat-no" title="statement not covered" >Lib.extractMimeType(content.mimeType);</span>
+&nbsp;
+        // Highlight the syntax if the mimeType is supported.
+        var brush = <span class="cstat-no" title="statement not covered" >HighlightedTab.shouldHighlightAs(mimeType);</span>
+<span class="cstat-no" title="statement not covered" >        if (brush) {</span>
+<span class="cstat-no" title="statement not covered" >            code.className = brush;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            text = RequestBody.decode(text, content.encoding);</span>
+&nbsp;
+            // If we want to highlight HTML then we can't use 'innerHTML=' in this way,
+            // as CSS from the HTML content will be parsed/used in the main HAR Viewer document.
+            //pre.innerHTML = text;
+&nbsp;
+            // Instead we insert a text node.
+<span class="cstat-no" title="statement not covered" >            code.appendChild(document.createTextNode(text));</span>
+<span class="cstat-no" title="statement not covered" >            hljs.highlightBlock(code);</span>
+&nbsp;
+            // test that highlighting has worked, and set a flag that helps with testing.
+            var highlightedElement = <span class="cstat-no" title="statement not covered" >code;</span>
+<span class="cstat-no" title="statement not covered" >            if (code.classList.contains("hljs")) {</span>
+<span class="cstat-no" title="statement not covered" >                highlightedElement.setAttribute("highlighted", true);</span>
+            }
+        }
+        else
+        {
+<span class="cstat-no" title="statement not covered" >            Lib.insertWrappedText(text, pre);</span>
+        }
+    }
+});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >HighlightedTab.canShowFile = <span class="fstat-no" title="function not covered" >fu</span>nction(file) {</span>
+    var content = <span class="cstat-no" title="statement not covered" >file.response.content;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!content || !content.text) {</span>
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!RequestBody.canDecode(content.encoding)) {</span>
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+    }
+&nbsp;
+    // Remove any mime type parameters (if any)
+    var mimeType = <span class="cstat-no" title="statement not covered" >Lib.extractMimeType(content.mimeType || "");</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return (null !== HighlightedTab.shouldHighlightAs(mimeType));</span>
+};
+&nbsp;
+<span class="cstat-no" title="statement not covered" >HighlightedTab.shouldHighlightAs = <span class="fstat-no" title="function not covered" >fu</span>nction(mimeType) {</span>
+    var mimeTypesToHighlight = <span class="cstat-no" title="statement not covered" >{</span>
+        javascript: [
+            "application/javascript",
+            "text/javascript",
+            "application/x-javascript",
+            "text/ecmascript",
+            "application/ecmascript",
+            "application/json"
+        ],
+        css: ["text/css"],
+        html: ["text/html", "application/xhtml+xml"]
+    };
+<span class="cstat-no" title="statement not covered" >    for (var brush in mimeTypesToHighlight) {</span>
+<span class="cstat-no" title="statement not covered" >        if (mimeTypesToHighlight[brush].indexOf(mimeType) &gt; -1) {</span>
+<span class="cstat-no" title="statement not covered" >            return brush;</span>
+        }
+    }
+<span class="cstat-no" title="statement not covered" >    return XmlTab.isXmlMimeType(mimeType) ? "xml" : null;</span>
+};
+&nbsp;
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+&nbsp;
+function <span class="fstat-no" title="function not covered" >ParamsTab(</span>file)
+{
+<span class="cstat-no" title="statement not covered" >    this.file = file;</span>
+}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >ParamsTab.prototype = domplate(HeadersTab.prototype,</span>
+{
+    id: "Params",
+    label: Strings.URLParameters,
+&nbsp;
+    bodyTag:
+        TABLE({"class": "netInfoParamsText netInfoText netInfoParamsTable",
+            cellpadding: 0, cellspacing: 0}, TBODY()
+        ),
+&nbsp;
+    onUpdateBody: <span class="fstat-no" title="function not covered" >fu</span>nction(tabView, body)
+    {
+<span class="cstat-no" title="statement not covered" >        if (this.file.request.queryString)</span>
+        {
+            var textBox = <span class="cstat-no" title="statement not covered" >Lib.getElementByClass(body, "netInfoParamsText");</span>
+<span class="cstat-no" title="statement not covered" >            this.insertHeaderRows(textBox, this.file.request.queryString, "Params");</span>
+        }
+    }
+});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >ParamsTab.canShowFile = <span class="fstat-no" title="function not covered" >fu</span>nction(file) {</span>
+<span class="cstat-no" title="statement not covered" >    return (file.request.queryString &amp;&amp; file.request.queryString.length);</span>
+};
+&nbsp;
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+&nbsp;
+function <span class="fstat-no" title="function not covered" >SentDataTab(</span>file)
+{
+    var method = <span class="cstat-no" title="statement not covered" >file.request.method;</span>
+&nbsp;
+    // Convert to lower case and capitalize the first letter.
+<span class="cstat-no" title="statement not covered" >    method = method.charAt(0).toUpperCase() + method.slice(1).toLowerCase();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.file = file;</span>
+<span class="cstat-no" title="statement not covered" >    this.id =  method;</span>
+<span class="cstat-no" title="statement not covered" >    this.label = Strings[method];</span>
+}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >SentDataTab.prototype = domplate(HeadersTab.prototype,</span>
+{
+    bodyTag:
+        DIV({"class": "netInfo$tab.id\\Text netInfoText"},
+            TABLE({"class": "netInfo$tab.id\\Table", cellpadding: 0, cellspacing: 0},
+                TBODY()
+            )
+        ),
+&nbsp;
+    onUpdateBody: <span class="fstat-no" title="function not covered" >fu</span>nction(tabView, body)
+    {
+        var postData = <span class="cstat-no" title="statement not covered" >this.file.request.postData;</span>
+<span class="cstat-no" title="statement not covered" >        if (!postData)</span>
+<span class="cstat-no" title="statement not covered" >            return;</span>
+&nbsp;
+        var textBox = <span class="cstat-no" title="statement not covered" >Lib.getElementByClass(body, "netInfo" + this.id + "Text");</span>
+<span class="cstat-no" title="statement not covered" >        if (postData.mimeType === "application/x-www-form-urlencoded")</span>
+<span class="cstat-no" title="statement not covered" >            this.insertHeaderRows(textBox, postData.params, this.id);</span>
+        else
+<span class="cstat-no" title="statement not covered" >            Lib.insertWrappedText(postData.text, textBox);</span>
+    }
+});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >SentDataTab.canShowFile = <span class="fstat-no" title="function not covered" >fu</span>nction(file) {</span>
+    var postData = <span class="cstat-no" title="statement not covered" >file.request.postData;</span>
+<span class="cstat-no" title="statement not covered" >    if (!postData) {</span>
+        // No post data at all.
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+    }
+&nbsp;
+    var paramsMissing = <span class="cstat-no" title="statement not covered" >!Lib.isArray(postData.params) || (postData.params.length === 0);</span>
+    var textMissing = <span class="cstat-no" title="statement not covered" >!postData.text;</span>
+&nbsp;
+    var postContentMissing = <span class="cstat-no" title="statement not covered" >paramsMissing &amp;&amp; textMissing;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (postContentMissing) {</span>
+        // (at least) Firefox 47 exports GET requests in HARs that have:
+        //   postData.mimeType = ""
+        //   postData.params = []
+        //   postData.text = ""
+        // So double-check for this and only allow such 'empty' postData for PUT and POST
+<span class="cstat-no" title="statement not covered" >        return ["PUT", "POST"].indexOf(file.request.method) &gt; -1;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return true;</span>
+};
+&nbsp;
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+&nbsp;
+function <span class="fstat-no" title="function not covered" >CookiesTab(</span>file)
+{
+<span class="cstat-no" title="statement not covered" >    this.file = file;</span>
+}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >CookiesTab.prototype = domplate(HeadersTab.prototype,</span>
+{
+    id: "Cookies",
+    label: Strings.Cookies,
+&nbsp;
+    bodyTag:
+        DIV({"class": "netInfoCookiesText netInfoText"},
+            TABLE({"class": "netInfoCookiesTable", cellpadding: 0, cellspacing: 0},
+                TBODY(
+                    TR({"class": "netInfoResponseCookiesTitle"},
+                        TD({colspan: 2},
+                            DIV({"class": "netInfoCookiesGroup"}, Strings.ResponseCookies)
+                        )
+                    ),
+                    TR({"class": "netInfoRequestCookiesTitle"},
+                        TD({colspan: 2},
+                            DIV({"class": "netInfoCookiesGroup"}, Strings.RequestCookies)
+                        )
+                    )
+                )
+            )
+        ),
+&nbsp;
+    onUpdateBody: <span class="fstat-no" title="function not covered" >fu</span>nction(tabView, body)
+    {
+        var textBox = <span class="cstat-no" title="statement not covered" >Lib.getElementByClass(body, "netInfoParamsText");</span>
+&nbsp;
+        var file = <span class="cstat-no" title="statement not covered" >this.file;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (file.response.cookies)</span>
+        {
+<span class="cstat-no" title="statement not covered" >            this.insertHeaderRows(textBox, file.response.cookies, "Cookies", "ResponseCookies");</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (file.request.cookies)</span>
+        {
+<span class="cstat-no" title="statement not covered" >            this.insertHeaderRows(textBox, file.request.cookies, "Cookies", "RequestCookies");</span>
+        }
+    }
+});
+&nbsp;
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+&nbsp;
+function <span class="fstat-no" title="function not covered" >CacheTab(</span>file)
+{
+<span class="cstat-no" title="statement not covered" >    this.file = file;</span>
+}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >CacheTab.prototype = domplate(HeadersTab.prototype,</span>
+{
+    id: "Cache",
+    label: Strings.Cache,
+&nbsp;
+    bodyTag:
+        DIV({"class": "netInfoCacheText netInfoText"},
+            TABLE({"class": "netInfoCacheTable", cellpadding: 0, cellspacing: 0},
+                TBODY()
+            )
+        ),
+&nbsp;
+    onUpdateBody: <span class="fstat-no" title="function not covered" >fu</span>nction(tabView, body)
+    {
+<span class="cstat-no" title="statement not covered" >        if (this.file.cache &amp;&amp; this.file.cache.afterRequest)</span>
+        {
+            var cacheEntry = <span class="cstat-no" title="statement not covered" >this.file.cache.afterRequest;</span>
+&nbsp;
+            var values = <span class="cstat-no" title="statement not covered" >[];</span>
+<span class="cstat-no" title="statement not covered" >            for (var prop in cacheEntry)</span>
+<span class="cstat-no" title="statement not covered" >                values.push({name: prop, value: cacheEntry[prop]});</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            this.insertHeaderRows(body, values, "Cache");</span>
+        }
+    }
+});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >CacheTab.canShowFile = <span class="fstat-no" title="function not covered" >fu</span>nction(file) {</span>
+<span class="cstat-no" title="statement not covered" >    if (!file.cache) {</span>
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!file.cache.afterRequest) {</span>
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return true;</span>
+};
+&nbsp;
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+&nbsp;
+/**
+ * @domplate Represents an HTML preview for network responses using 'text/html' or
+ * 'application/xhtml+xml' mime type.
+ */
+function <span class="fstat-no" title="function not covered" >HtmlTab(</span>file)
+/** @lends HtmlTab */
+{
+<span class="cstat-no" title="statement not covered" >    this.file = file;</span>
+}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >HtmlTab.prototype = domplate(HeadersTab.prototype,</span>
+{
+    id: "HTML",
+    label: Strings.HTML,
+&nbsp;
+    bodyTag:
+        DIV({"class": "netInfoHtmlText netInfoText"},
+            IFRAME({"class": "netInfoHtmlPreview", onload: "$onLoad"}),
+            DIV({"class": "htmlPreviewResizer"})
+        ),
+&nbsp;
+    onUpdateBody: <span class="fstat-no" title="function not covered" >fu</span>nction(tabView, body)
+    {
+<span class="cstat-no" title="statement not covered" >        this.preview = Lib.getElementByClass(body, "netInfoHtmlPreview");</span>
+&nbsp;
+        var height = <span class="cstat-no" title="statement not covered" >parseInt(Cookies.getCookie("htmlPreviewHeight"), 10);</span>
+<span class="cstat-no" title="statement not covered" >        if (!isNaN(height))</span>
+<span class="cstat-no" title="statement not covered" >            this.preview.style.height = height + "px";</span>
+&nbsp;
+        var handler = <span class="cstat-no" title="statement not covered" >Lib.getElementByClass(body, "htmlPreviewResizer");</span>
+<span class="cstat-no" title="statement not covered" >        this.resizer = new DragDrop.Tracker(handler, {</span>
+            onDragStart: Lib.bind(this.onDragStart, this),
+            onDragOver: Lib.bind(this.onDragOver, this),
+            onDrop: Lib.bind(this.onDrop, this)
+        });
+    },
+&nbsp;
+    onLoad: <span class="fstat-no" title="function not covered" >fu</span>nction(event)
+    {
+        var e = <span class="cstat-no" title="statement not covered" >Lib.fixEvent(event);</span>
+        var self = <span class="cstat-no" title="statement not covered" >Lib.getAncestorByClass(e.target, "tabHTMLBody").repObject;</span>
+<span class="cstat-no" title="statement not covered" >        self.preview.contentWindow.document.body.innerHTML = self.file.response.content.text;</span>
+    },
+&nbsp;
+    onDragStart: <span class="fstat-no" title="function not covered" >fu</span>nction(tracker)
+    {
+        var body = <span class="cstat-no" title="statement not covered" >Lib.getBody(this.preview.ownerDocument);</span>
+<span class="cstat-no" title="statement not covered" >        body.setAttribute("hResizing", "true");</span>
+<span class="cstat-no" title="statement not covered" >        this.startHeight = this.preview.clientHeight;</span>
+    },
+&nbsp;
+    onDragOver: <span class="fstat-no" title="function not covered" >fu</span>nction(newPos, tracker)
+    {
+        var newHeight = (<span class="cstat-no" title="statement not covered" >this.startHeight + newPos.y)</span>;
+<span class="cstat-no" title="statement not covered" >        this.preview.style.height = newHeight + "px";</span>
+<span class="cstat-no" title="statement not covered" >        Cookies.setCookie("htmlPreviewHeight", newHeight);</span>
+    },
+&nbsp;
+    onDrop: <span class="fstat-no" title="function not covered" >fu</span>nction(tracker)
+    {
+        var body = <span class="cstat-no" title="statement not covered" >Lib.getBody(this.preview.ownerDocument);</span>
+<span class="cstat-no" title="statement not covered" >        body.removeAttribute("hResizing");</span>
+    }
+});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >HtmlTab.canShowFile = <span class="fstat-no" title="function not covered" >fu</span>nction(file) {</span>
+    // The mime-type value doesn't have to match the content type exactly
+    // there can be a charset specified. So, check the prefix.
+    var mimeType = <span class="cstat-no" title="statement not covered" >file.response.content.mimeType || "";</span>
+    var fileMimeType = <span class="cstat-no" title="statement not covered" >file.mimeType || "";</span>
+<span class="cstat-no" title="statement not covered" >    return (Lib.startsWith(mimeType, "text/html")) ||</span>
+        (Lib.startsWith(fileMimeType, "application/xhtml+xml"));
+};
+&nbsp;
+/**
+ * @domplate Represents a request body tab displaying unescaped data: URLs.
+ */
+function <span class="fstat-no" title="function not covered" >DataURLTab(</span>file)
+/** @lends DataURLTab */
+{
+<span class="cstat-no" title="statement not covered" >    this.file = file;</span>
+}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >DataURLTab.prototype = domplate(HeadersTab.prototype,</span>
+{
+    id: "DataURL",
+    label: Strings.DataURL,
+&nbsp;
+    bodyTag:
+        DIV({"class": "netInfoDataURLText netInfoText"}),
+&nbsp;
+    onUpdateBody: <span class="fstat-no" title="function not covered" >fu</span>nction(tabView, body)
+    {
+        var textBox = <span class="cstat-no" title="statement not covered" >Lib.getElementByClass(body, "netInfoDataURLText");</span>
+        var data = <span class="cstat-no" title="statement not covered" >this.file.request.url;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (data.indexOf("data:image") === 0)</span>
+        {
+            var image = <span class="cstat-no" title="statement not covered" >body.ownerDocument.createElement("img");</span>
+<span class="cstat-no" title="statement not covered" >            image.src = data;</span>
+<span class="cstat-no" title="statement not covered" >            textBox.appendChild(image);</span>
+        }
+        else
+        {
+<span class="cstat-no" title="statement not covered" >            Lib.insertWrappedText(unescape(data), textBox);</span>
+        }
+    }
+});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >DataURLTab.canShowFile = <span class="fstat-no" title="function not covered" >fu</span>nction(file) {</span>
+<span class="cstat-no" title="statement not covered" >    return file.request.url.indexOf("data:") === 0;</span>
+};
+&nbsp;
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+&nbsp;
+function <span class="fstat-no" title="function not covered" >JsonTab(</span>file) {
+<span class="cstat-no" title="statement not covered" >    this.file = file;</span>
+}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >JsonTab.prototype = domplate(TabView.Tab.prototype, {</span>
+    id: "JSON",
+    label: Strings.JSON,
+&nbsp;
+    bodyTag:
+        DIV({"class": "netInfoJsonText netInfoText"}),
+&nbsp;
+    onUpdateBody: <span class="fstat-no" title="function not covered" >fu</span>nction(tabView, body) {
+<span class="cstat-no" title="statement not covered" >        Lib.clearNode(body.firstChild);</span>
+&nbsp;
+        var content = <span class="cstat-no" title="statement not covered" >this.file.response.content;</span>
+<span class="cstat-no" title="statement not covered" >        try {</span>
+            var jsonStr = <span class="cstat-no" title="statement not covered" >RequestBody.decode(content.text, content.encoding);</span>
+            var ob = <span class="cstat-no" title="statement not covered" >JSON.parse(jsonStr);</span>
+            var domTree = <span class="cstat-no" title="statement not covered" >new DomTree(ob);</span>
+<span class="cstat-no" title="statement not covered" >            domTree.append(body);</span>
+        } catch (e) {
+<span class="cstat-no" title="statement not covered" >            body.innerHTML = String(e);</span>
+        }
+    }
+});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >JsonTab.canShowFile = <span class="fstat-no" title="function not covered" >fu</span>nction(file) {</span>
+    var content = <span class="cstat-no" title="statement not covered" >file.response.content;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!content || !content.text) {</span>
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!RequestBody.canDecode(content.encoding)) {</span>
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+    }
+&nbsp;
+    var mimeType = <span class="cstat-no" title="statement not covered" >Lib.extractMimeType(content.mimeType || "");</span>
+<span class="cstat-no" title="statement not covered" >    return ["application/json"].indexOf(mimeType) &gt; -1;</span>
+};
+&nbsp;
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+&nbsp;
+function <span class="fstat-no" title="function not covered" >XmlTab(</span>file) {
+<span class="cstat-no" title="statement not covered" >    this.file = file;</span>
+}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >XmlTab.prototype = domplate(TabView.Tab.prototype, {</span>
+    id: "XML",
+    label: Strings.XML,
+&nbsp;
+    bodyTag:
+        DIV({"class": "netInfoXmlText netInfoText"}),
+&nbsp;
+    onUpdateBody: <span class="fstat-no" title="function not covered" >fu</span>nction(tabView, body)
+    {
+<span class="cstat-no" title="statement not covered" >        Lib.clearNode(body.firstChild);</span>
+&nbsp;
+        var content = <span class="cstat-no" title="statement not covered" >this.file.response.content;</span>
+<span class="cstat-no" title="statement not covered" >        try {</span>
+            var xmlStr = <span class="cstat-no" title="statement not covered" >RequestBody.decode(content.text, content.encoding);</span>
+            var xmlDoc = <span class="cstat-no" title="statement not covered" >$.parseXML(xmlStr);</span>
+            var domTree = <span class="cstat-no" title="statement not covered" >new DomTree(xmlDoc);</span>
+<span class="cstat-no" title="statement not covered" >            domTree.append(body);</span>
+        } catch (e) {
+<span class="cstat-no" title="statement not covered" >            body.innerHTML = String(e);</span>
+        }
+    }
+});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >XmlTab.isXmlMimeType = <span class="fstat-no" title="function not covered" >fu</span>nction(mimeType) {</span>
+<span class="cstat-no" title="statement not covered" >    mimeType = Lib.extractMimeType(mimeType);</span>
+<span class="cstat-no" title="statement not covered" >    return [</span>
+        "text/xml",
+        "application/xml",
+        "image/svg+xml",
+        "application/atom+xml",
+        "application/xslt+xml",
+        "application/mathml+xml",
+        "application/rss+xml"
+    ].indexOf(mimeType) &gt; -1;
+};
+&nbsp;
+<span class="cstat-no" title="statement not covered" >XmlTab.canShowFile = <span class="fstat-no" title="function not covered" >fu</span>nction(file) {</span>
+    var content = <span class="cstat-no" title="statement not covered" >file.response.content;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!content || !content.text) {</span>
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!RequestBody.canDecode(content.encoding)) {</span>
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+    }
+&nbsp;
+    var mimeType = <span class="cstat-no" title="statement not covered" >Lib.extractMimeType(content.mimeType || "");</span>
+<span class="cstat-no" title="statement not covered" >    return XmlTab.isXmlMimeType(mimeType);</span>
+};
+&nbsp;
+//*************************************************************************************************
+&nbsp;
+<span class="cstat-no" title="statement not covered" >return RequestBody;</span>
+&nbsp;
+//*************************************************************************************************
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Nov 17 2018 09:34:32 GMT+0000 (Greenwich Mean Time)
+</div>
+</div>
+<script src="..\..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\..\sorter.js"></script>
+</body>
+</html>

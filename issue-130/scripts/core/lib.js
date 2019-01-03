@@ -1,0 +1,3 @@
+/* See license.txt for terms of usage */
+
+define(["./array","./css","./date","./dom","./events","./json","./mime","./object","./rect","./sniff","./string","./url","./trace"],function(e,n,a,t,p,d,r,c,o,s,i,l,g){var m={};return c.append(m,s),c.append(m,c),c.append(m,p),c.append(m,o),c.append(m,e),c.append(m,i),c.append(m,a),c.append(m,r),c.append(m,l),c.append(m,t),c.append(m,n),c.append(m,d),m.selectElementText=function(e,n,a){var t,p=window,d=p.document;if(p.getSelection&&d.createRange){var r=p.getSelection();t=d.createRange(),t.setStart(e,n),t.setEnd(e,a),r.removeAllRanges(),r.addRange(t)}else d.body.createTextRange&&(t=d.body.createTextRange(),t.moveToElementText(e),t.select())},m});

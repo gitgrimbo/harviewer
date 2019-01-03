@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for preview\harModelLoader.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">preview/</a> harModelLoader.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">67.53% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>52/77</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">48.98% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>24/49</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">53.33% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>8/15</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">67.53% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>52/77</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* See license.txt for terms of usage */
+&nbsp;
+/**
+ * @module preview/harModelLoader
+ */
+define([
+    "core/url"
+],
+&nbsp;
+function(Url) {
+&nbsp;
+/**
+ * Return type for `Loader.getLoadOptions()`.
+ *
+ * @typedef {Object} LoadOptions
+ *
+ * @property {string} callbackName
+ *   Used as the callback name when loading HARPs (JSONP).
+ * @property {string} baseUrl
+ *   Will be prepended to "path", "har" and "harp" URL parameters if provided.
+ * @property {string[]} hars
+ *   A list of HAR files to load.
+ * @property {string[]} harps
+ *   A list of HARP files to load.
+ * @property {string[]} urls
+ *   Legacy parameter. Derived from the "path" and "inputUrl" URL parameters.
+ * @property {string[]} inputUrls
+ *   Legacy parameter. Derived from "inputUrl" URL parameters to specific HARP files to load.
+ * @property {string} filePath
+ *   Legacy parameter. Derived from the first "path" URL parameter.
+ */
+&nbsp;
+/**
+ * Helper for loading HAR resources.
+ *
+ * @alias module:preview/harModelLoader
+ */
+var Loader =
+{
+    /**
+     * @param {string} url
+     *   The URL to create the load options for.
+     * @return {module:preview/harModelLoader~LoadOptions}
+     */
+    getLoadOptions: function(url) {
+        var baseUrl = Url.getURLParameter("baseUrl", url);
+&nbsp;
+        // Append traling slash if missing.
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (baseUrl &amp;&amp; baseUrl[baseUrl.length-1] !== "/") {
+<span class="cstat-no" title="statement not covered" >            baseUrl += "/";</span>
+        }
+&nbsp;
+        var callbackName = Url.getURLParameter("callback", url);
+        var filePath = Url.getURLParameter("path", url);
+&nbsp;
+        // Legacy path and inputUrl
+        var paths = Url.getURLParameters("path", url);
+        var inputUrls = Url.getURLParameters("inputUrl", url).concat(Url.getHashParameters("inputUrl", url));
+&nbsp;
+        var urls = paths.map(function(path) {
+            return baseUrl ? baseUrl + path : path;
+        });
+&nbsp;
+        urls = urls.concat(inputUrls);
+        // End Legacy path and inputUrl
+&nbsp;
+        // New har and harp
+        var hars = Url.getURLParameters("har", url);
+        var harps = Url.getURLParameters("harp", url).concat(Url.getHashParameters("harp", url));
+&nbsp;
+        if (baseUrl) {
+            hars = hars.map(<span class="fstat-no" title="function not covered" >function(har) {</span>
+<span class="cstat-no" title="statement not covered" >                return baseUrl + har;</span>
+            });
+            harps = harps.map(<span class="fstat-no" title="function not covered" >function(harp) {</span>
+<span class="cstat-no" title="statement not covered" >                return baseUrl + harp;</span>
+            });
+        }
+        // End New har and harp
+&nbsp;
+        return {
+            callbackName: callbackName,
+            baseUrl: baseUrl,
+            urls: urls,
+            inputUrls: inputUrls,
+            hars: hars,
+            harps: harps,
+            filePath: filePath
+        };
+    },
+&nbsp;
+    /**
+     * Uses the parameters provided in `window.location.href` to load HAR and or HARP files.
+     */
+    run: <span class="fstat-no" title="function not covered" >function(callback, errorCallback)</span>
+    {
+<span class="cstat-no" title="statement not covered" >        var loadOptions = this.getLoadOptions(window.location.href);</span>
+&nbsp;
+        // New params
+<span class="cstat-no" title="statement not covered" >        if (loadOptions.hars.length &gt; 0 || loadOptions.harps.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >            return this.loadArchives(loadOptions.hars, loadOptions.harps, loadOptions.callbackName, callback, errorCallback);</span>
+        }
+&nbsp;
+        // Legacy params
+<span class="cstat-no" title="statement not covered" >        if ((loadOptions.baseUrl || loadOptions.inputUrls.length &gt; 0) &amp;&amp; loadOptions.urls.length &gt; 0) {</span>
+            // The assumption here is that we load as HARP (JSONP).
+<span class="cstat-no" title="statement not covered" >            return this.loadArchives([], loadOptions.urls, loadOptions.callbackName, callback, errorCallback);</span>
+        }
+&nbsp;
+        // Legacy params
+        // The URL can specify also a locale file (with the same domain).
+        // http://domain/har/viewer?path=&lt;local-file-path&gt;
+<span class="cstat-no" title="statement not covered" >        if (loadOptions.filePath) {</span>
+            // The assumption here is that we load as HAR (XHR).
+<span class="cstat-no" title="statement not covered" >            return this.loadArchives([loadOptions.filePath], [], loadOptions.callbackName, callback, errorCallback);</span>
+        }
+    },
+&nbsp;
+    /**
+     * @param {string[]} hars
+     *   Load these HARs (via XHR, same-domain or cross-domain).
+     * @param {string[]} harps
+     *   Load these HARPs (via JSONP, same-domain or cross-domain).
+     * @param {string} callbackName
+     *   Use this callback name for any HARPs (JSONP).
+     * @param {function} callback
+     *   Called when a HAR/HARP is loaded successfully.
+     * @param {function} errorCallback
+     *   Called when any HAR/HARP fails to load.
+     * @param {function} doneCallback
+     *   Called when all HARs/HARPs are loaded successfully.
+     * @return {boolean}
+     *   `true` if there was any HAR/HARP to load, `false` otherwise.
+     */
+    loadArchives: function(hars, harps, callbackName, callback, errorCallback, doneCallback)
+    {
+        function done() {
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (doneCallback) {
+                doneCallback();
+            }
+        }
+&nbsp;
+        hars = hars || [];
+        harps = harps || [];
+&nbsp;
+        var isHarp = false;
+&nbsp;
+        // try a HAR first
+        var url = hars.shift();
+&nbsp;
+        if (!url) {
+            // No HARs, try a HARP
+            isHarp = true;
+            url = harps.shift();
+        }
+&nbsp;
+        if (!url) {
+            // No HAR or HARP.  We're done.
+            done();
+            return false;
+        }
+&nbsp;
+        if (!callbackName) {
+            callbackName = "onInputData";
+        }
+&nbsp;
+        var ajaxOpts = {
+            url: url,
+            context: this,
+            dataType: "json",
+&nbsp;
+            success: function() {
+                <span class="missing-if-branch" title="else path not taken" >E</span>if (callback) {
+                    callback.apply(this, arguments);
+                }
+&nbsp;
+                if (hars.length + harps.length === 0) {
+                    done();
+                    return;
+                }
+&nbsp;
+                // Asynchronously load other HAR files (jQuery doesn't like it synchronously).
+                var self = this;
+                setTimeout(function() {
+                    self.loadArchives(hars, harps, callbackName, callback, errorCallback, doneCallback);
+                }, 300);
+            },
+&nbsp;
+            error: function() {
+                // Here to place breakpoints :)
+                <span class="missing-if-branch" title="else path not taken" >E</span>if (errorCallback) {
+                    errorCallback.apply(this, arguments);
+                }
+            }
+        };
+&nbsp;
+        if (isHarp) {
+            ajaxOpts.dataType = "jsonp";
+            ajaxOpts.jsonp = "callback";
+            ajaxOpts.jsonpCallback = callbackName;
+        }
+&nbsp;
+        this.ajax(ajaxOpts);
+&nbsp;
+        return true;
+    },
+&nbsp;
+    ajax: <span class="fstat-no" title="function not covered" >function(ajaxOpts) {</span>
+<span class="cstat-no" title="statement not covered" >        $.ajax(ajaxOpts);</span>
+    },
+&nbsp;
+    /**
+     * @param {object} scope
+     *   Scope to execute the callbacks in.
+     * @param {string} url
+     *   The url of the file to load (HAR or HARP).
+     * @param {boolean} isHarp
+     *   Set to `true` if the url to load is a HARP, otherwise it will be loaded as a HAR.
+     * @param {string} callbackName
+     *   Callback name to use if loading a HARP.
+     * @param {function} callback
+     *   Called when HAR/HARP loads successfully.
+     * @param {function} errorCallback
+     *   Called when HAR/HARP fails to load.
+     */
+    load: <span class="fstat-no" title="function not covered" >function(scope, url, isHarp, callbackName, callback, errorCallback)</span>
+    {
+<span class="fstat-no" title="function not covered" >        function onLoaded(input)</span>
+        {
+<span class="cstat-no" title="statement not covered" >            if (scope.appendPreview) {</span>
+<span class="cstat-no" title="statement not covered" >                scope.appendPreview(input);</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (callback) {</span>
+<span class="cstat-no" title="statement not covered" >                callback.call(scope, input);</span>
+            }
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function onError(jqXHR, textStatus, errorThrown)</span>
+        {
+<span class="cstat-no" title="statement not covered" >            if (scope.onLoadError) {</span>
+<span class="cstat-no" title="statement not covered" >                scope.onLoadError(jqXHR, textStatus, errorThrown);</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (errorCallback) {</span>
+<span class="cstat-no" title="statement not covered" >                errorCallback.call(scope, jqXHR, textStatus, errorThrown);</span>
+            }
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var hars = [];</span>
+<span class="cstat-no" title="statement not covered" >        var harps = [];</span>
+<span class="cstat-no" title="statement not covered" >        if (isHarp) {</span>
+<span class="cstat-no" title="statement not covered" >            harps.push(url);</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >            hars.push(url);</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return this.loadArchives(hars, harps, callbackName, onLoaded, onError);</span>
+    }
+};
+&nbsp;
+return Loader;
+&nbsp;
+//*************************************************************************************************
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Feb 16 2017 14:44:00 GMT+0000 (GMT Standard Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>
